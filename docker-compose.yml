@@ -12,9 +12,9 @@ services:
 
   web:
     build: .
-    working_dir: /var/django_project
+    working_dir: /var/blog
     volumes:
-      - .:/var/django_project
+      - .:/var/blog
     ports:
       - "8000:8000"
       - "2222:22"
