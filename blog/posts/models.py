@@ -8,6 +8,7 @@ class Post(models.Model):
 	updated = models.DateTimeField(auto_now=True)
 	created = models.DateTimeField(auto_now_add=True)
 	status = models.IntegerField(choices=POST_STATUS_CHOICES, default=POST_STATUS_HIDE)
+	image_url = models.CharField(max_length=1024, blank=True, null=True)
 
 	class Meta:
 		verbose_name = 'post'

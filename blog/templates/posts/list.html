@@ -1,10 +1,15 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h2>posts</h2>
-    <ul>
-    	{% for post in posts %}
-    		<li>{{ post.title }}</li>
-    	{% endfor %}
-    </ul>
+	<h2>posts</h2>
+	<ul>
+		{% for post in posts %}
+			<li class="post">
+				<div class="container">
+					<img src="{{ post.image_url }}" />
+					<h1>{{ post.title }}</h1>
+				</div>
+			</li>
+		{% endfor %}
+	</ul>
 {% endblock %}

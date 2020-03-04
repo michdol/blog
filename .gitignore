@@ -1,4 +1,5 @@
 certificates/dev*
 blog/blog/credentials.py
+blog/static/*
 */*/__pycache__/
 *.pyc
