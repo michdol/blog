@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'sass_processor',
     'posts',
 ]
 
@@ -64,6 +65,12 @@ TEMPLATES = [
             ],
         },
     },
+]
+
+STATICFILES_FINDERS = [
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'sass_processor.finders.CssFinder',
 ]
 
 WSGI_APPLICATION = 'blog.wsgi.application'
@@ -125,3 +132,7 @@ SITE_ROOT = os.path.dirname(os.path.realpath(__file__))
 STATICFILES_DIRS = (
   os.path.join(BASE_DIR, 'assets/'),
 )
+
+# DJANGO SASS PROCESSOR
+SASS_PROCESSOR_ROOT = os.path.join(BASE_DIR, 'assets')
+SASS_PROCESSOR_AUTO_INCLUDE = False
