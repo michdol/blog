@@ -20,6 +20,9 @@ class Post(models.Model):
 	def __unicode__(self):
 		return self.title
 
+	def get_home_page_background_color(self):
+		return self.extra.get('background-color', "#61082b")
+
 
 class PostContent(models.Model):
 	post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='contents')

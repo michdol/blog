@@ -16,13 +16,19 @@
 
 #posts {
 	height: 160vh;
+	div:first-child {
+		margin-bottom: 20vh;
+	}
+	#post_3_text {
+		padding-top: 10%;
+	}
 	img {
 		width: 80%;
 		&.post_img_1 {
 			height: 80%;
 		}
 		&.post_img_2 {
-			height: 60%;
+			height: 55%;
 		}
 		&.post_img_3 {
 			height: 80%;
