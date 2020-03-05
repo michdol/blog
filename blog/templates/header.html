@@ -3,9 +3,9 @@
 {% block content %}
 <div id="header">
 	<nav class="nav flex-column justify-content-center">
-		<a data-toggle="list" href="/" role="tab" aria-controls="home">Home</a>
-		<a data-toggle="list" href="/" role="tab" aria-controls="profile">Profile</a>
-		<a data-toggle="list" href="/" role="tab" aria-controls="messages">Messages</a>
+		<a href="/" aria-controls="home">Home</a>
+		<a href="/" role="tab" aria-controls="profile">About</a>
+		<a href="{% url 'posts:list' %}" role="tab" aria-controls="messages">Posts</a>
 	</nav>
 
 	<a href="/" id="home_logo">

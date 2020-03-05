@@ -1,4 +1,4 @@
-from django.views.generic import ListView, TemplateView
+from django.views.generic import DetailView, ListView, TemplateView
 
 from posts.models import Post
 
@@ -20,3 +20,8 @@ class PostsView(ListView):
 	model = Post
 	template_name = 'posts/list.html'
 	context_object_name = 'posts'
+
+
+class PostDetailView(DetailView):
+	model = Post
+	template_name = 'posts/detail.html'

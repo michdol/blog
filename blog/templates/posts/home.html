@@ -9,7 +9,7 @@
 <div class="container-fluid" id="latest_post" style="background-color: {{latest_post.get_home_page_background_color}};">
 	<div class="row align-items-center">
 		<div class="col-7 text-center">
-			<h1 class="align-middle">{{latest_post.title}}</h1><br />
+			<a class="title" href="{% url 'posts:detail' latest_post.id %}">{{ latest_post.title }}</a>
 			<span class="align-middle">{{latest_post.description}}</span>
 		</div>
 		<div class="col-5" id="latest_post_image" style="background-image: url('{{latest_post.image_url}}');">
@@ -21,12 +21,12 @@
 	<div class="row h-50">
 		<div class="col-6 text-justify" id="post_1">
 			<img class="post_img_1" src="{{ post_1.image_url }}" />
-			<h1>{{ post_1.title }}</h1>
+			<a class="title" href="{% url 'posts:detail' post_1.id %}">{{ post_1.title }}</a>
 			<span>{{post_1.description}}</span>
 		</div>
 		<div class="col-6 text-justify" id="post_2">
 			<img class="post_img_2" src="{{ post_2.image_url }}" />
-			<h1>{{ post_2.title }}</h1>
+			<a class="title" href="{% url 'posts:detail' post_2.id %}">{{ post_2.title }}</a>
 			<span>{{post_2.description}}</span>
 		</div>
 	</div>
@@ -34,7 +34,7 @@
 	<!-- Post 3 -->
 	<div class="row h-50" id="post_3">
 		<div class="col-6 text-justify" id="post_3_text">
-			<h1>{{ post_3.title }}</h1>
+			<a class="title" href="{% url 'posts:detail' post_3.id %}">{{ post_3.title }}</a>
 			<span>{{post_3.description}}</span>
 		</div>
 		<div class="col-6">
