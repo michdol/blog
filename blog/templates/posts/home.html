@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% load static sass_tags %}
+
+{% block extra_css %}
+<link href="{% sass_src 'css/posts/home.scss' %}" rel="stylesheet" type="text/css" />
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid" id="latest_post">
+	<div class="row align-items-center">
+		<div class="col-7 text-center">
+			<span class="align-middle">{{latest_post.title}}</span><br />
+			<span class="align-middle">{{latest_post.description}}</span>
+		</div>
+		<div class="col-5" id="latest_post_image" style="background-image: url('{{latest_post.image_url}}');">
+		</div>
+	</div>
+</div>
+<div class="container" id="posts">
+	<div class="row h-50">
+		<div class="col-6">
+			<img class="post_img_1" src="{{ post_1.image_url }}" />
+			<h1>{{ post_1.title }}</h1>
+			<span>{{post_1.description}}</span>
+		</div>
+		<div class="col-6">
+			<img class="post_img_2" src="{{ post_2.image_url }}" />
+			<h1>{{ post_2.title }}</h1>
+			<span>{{post_2.description}}</span>
+		</div>
+	</div>
+	<div class="row h-50">
+		<div class="col-5 d-flex align-items-center text-center">
+			<span>{{ post_3.title }}</span>
+			<br />
+			<span>{{post_3.description}}</span>
+		</div>
+		<div class="col-7">
+			<img class="post_img_3" src="{{ post_3.image_url }}" />
+		</div>
+	</div>
+</div>
+{% endblock %}

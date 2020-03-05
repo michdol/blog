@@ -1,15 +1,11 @@
-{% load static sass_tags %}
-
-{% block extra_css %}
-<link href="{% sass_src 'css/header.scss' %}" rel="stylesheet" type="text/css" />
-{% endblock %}
+{% load static %}
 
 {% block content %}
 <div id="header">
 	<nav class="nav flex-column justify-content-center">
-		<a class="list-group-item list-group-item-action" id="list-home-list" data-toggle="list" href="/" role="tab" aria-controls="home">Home</a>
-		<a class="list-group-item list-group-item-action" id="list-profile-list" data-toggle="list" href="/" role="tab" aria-controls="profile">Profile</a>
-		<a class="list-group-item list-group-item-action" id="list-messages-list" data-toggle="list" href="/" role="tab" aria-controls="messages">Messages</a>
+		<a data-toggle="list" href="/" role="tab" aria-controls="home">Home</a>
+		<a data-toggle="list" href="/" role="tab" aria-controls="profile">Profile</a>
+		<a data-toggle="list" href="/" role="tab" aria-controls="messages">Messages</a>
 	</nav>
 
 	<a href="/" id="home_logo">

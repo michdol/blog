@@ -8,16 +8,20 @@
 		<!-- Bootstrap -->
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 		<!-- Bootstrap -->
+		<!-- Google fonts -->
+		<link href="https://fonts.googleapis.com/css?family=Special+Elite&display=swap" rel="stylesheet">
+		<!-- Google fonts -->
 
 		<link href="{% sass_src 'css/base.scss' %}" rel="stylesheet" type="text/css" />
+		<link href="{% sass_src 'css/header.scss' %}" rel="stylesheet" type="text/css" />	
 		{% block extra_css %}
 		{% endblock %}
 		<title>{% if title %}{{ title }}{% else %}Hello{% endif %}</title>
 	</head>
 	<body>
-		{% include "header.html" %}
-
 		<div id="main_container">
+			{% include "header.html" %}
+
 			{% block content %}
 			{% endblock %}
 		</div>

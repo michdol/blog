@@ -1,6 +1,12 @@
 {% extends "base.html" %}
+{% load static sass_tags %}
+
+{% block extra_css %}
+<link href="{% sass_src 'css/posts/list.scss' %}" rel="stylesheet" type="text/css" />
+{% endblock %}
 
 {% block content %}
+<section id="posts">
 	<h2>posts</h2>
 	<ul>
 		{% for post in posts %}
@@ -12,4 +18,5 @@
 			</li>
 		{% endfor %}
 	</ul>
+</section>
 {% endblock %}

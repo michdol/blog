@@ -1,24 +1,26 @@
 $bg_color: #61082b;
 $main_color : white;
-$primary_color: black;
-
+$active_color: black;
 
 div#header {
-	background: $bg_color;
-	position: absolute;
+	position: fixed;
 	width: 100%;
-	height: 25%;
 	padding: 20px 10px;
+	z-index: 5;
+	top: 0;
 
 	nav {
 		top: 0;
 		left: 0;
 		position: fixed;
-		width: 100%;
+		width: 100%	;
 		max-height: 0;
 		transition-timing-function: cubic-bezier(1 ,0, .5, 1);
 		a {
+			font-size: 50px;
+			color: black;
 			display: none;
+			font-family: 'Special Elite', cursive;
 		}
 	}
 	nav.active {
@@ -35,7 +37,6 @@ div#header {
 		a {
 			display: flex;
 			width: 25%;
-			padding: 12px 10%;
 		}
 	}
 
@@ -67,13 +68,12 @@ div#header {
 				margin: 10px;
 				height: 8px;
 				width: 50px;
-				// border-radius:20px;
 				transition: transform .3s, width .3s;
 			}
 		}
 		ul.menu_button.active {
 			li {
-				background: $primary_color;
+				background: $active_color;
 				transform: translateY(3px) rotate(45deg);
 			}
 		}
