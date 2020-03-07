@@ -1,5 +1,6 @@
 certificates/dev*
 blog/assets/js/app/node_modules/
+blog/assets/js/app/dist/
 blog/blog/credentials.py
 blog/static/*
 */*/__pycache__/
