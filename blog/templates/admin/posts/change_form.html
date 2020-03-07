@@ -1,0 +1,16 @@
+{% extends "admin/change_form.html" %}
+{% load static %}
+{% load render_bundle from webpack_loader %}
+
+
+{% block after_related_objects %}
+<div id="example"></div>
+{% endblock %}
+
+
+{% block admin_change_form_document_ready %}
+{{ block.super }}
+<script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+{% render_bundle 'main' %}
+{% endblock %}

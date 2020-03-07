@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'sass_processor',
+    'webpack_loader',
     'posts',
 ]
 
@@ -136,3 +137,15 @@ STATICFILES_DIRS = (
 # DJANGO SASS PROCESSOR
 SASS_PROCESSOR_ROOT = os.path.join(BASE_DIR, 'static')
 SASS_PROCESSOR_AUTO_INCLUDE = False
+
+WEBPACK_LOADER = {
+    'DEFAULT': {
+        'CACHE': not DEBUG,
+        'BUNDLE_DIR_NAME': 'js/app/dist/', # must end with slash
+        'STATS_FILE': os.path.join(BASE_DIR, 'assets/js/app/webpack-stats.json'),
+        'POLL_INTERVAL': 0.1,
+        'TIMEOUT': None,
+        'IGNORE': [r'.+\.hot-update.js', r'.+\.map'],
+        'LOADER_CLASS': 'webpack_loader.loader.WebpackLoader',
+    }
+}

@@ -1,0 +1,20 @@
+Install react/webpack and webpack-loader for django
+https://www.typescriptlang.org/docs/handbook/react-&-webpack.html
+https://github.com/owais/django-webpack-loader
+https://owais.lone.pw/blog/webpack-plus-reactjs-and-django/
+
+mkdir blog/assets/js/app
+cd blog/assets/js/app
+
+npm install -g npm@latest
+npm install -g n
+n latest
+# Probably restart terminal
+
+cd blog/assets/js/app
+npm init -y
+npm install --save-dev webpack webpack-cli
+npm install --save react react-dom
+npm install --save-dev @types/react @types/react-dom
+npm install --save-dev typescript ts-loader source-map-loader
+npm install --save-dev webpack-bundle-tracker
