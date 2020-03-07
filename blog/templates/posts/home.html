@@ -22,12 +22,12 @@
 </div>
 
 <div class="row" id="posts">
-	<div class="col-lg-6 col-sm-12 col-xs-12">
+	<div class="col-lg-4 col-sm-12 col-xs-12">
 		<img class="img_responsive" src="{{ post_1.image_url }}" />
 		<a class="title" href="{% url 'posts:detail' post_1.id %}">{{ post_1.title }}</a>
 		<span>{{post_1.description}}</span>
 	</div>
-	<div class="col-lg-5 col-sm-12 col-xs-12">
+	<div class="col-lg-4 col-sm-12 col-xs-12">
 		<img class="img_responsive" src="{{ post_2.image_url }}" />
 		<a class="title" href="{% url 'posts:detail' post_2.id %}">{{ post_2.title }}</a>
 		<span>{{post_2.description}}</span>
@@ -35,11 +35,13 @@
 </div>
 
 <div class="row" id="post_3">
-	<div class="col-lg-6 text-justify" id="post_3_text">
-		<a class="title" href="{% url 'posts:detail' post_3.id %}">{{ post_3.title }}</a>
-		<span>{{ post_3.description }}</span>
+	<div class="col-lg-4 d-flex" id="post_3_text">
+		<div class="row text-justify align-self-center">
+			<a class="title" href="{% url 'posts:detail' post_3.id %}">{{ post_3.title }}</a>
+			<span>{{ post_3.description }}</span>
+		</div>
 	</div>
-	<div class="col-lg-6">
+	<div class="col-lg-5">
 		<img class="img_responsive" src="{{ post_3.image_url }}" />
 	</div>
 </div>

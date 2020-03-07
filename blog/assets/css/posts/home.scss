@@ -1,7 +1,7 @@
 * a.title {
 	display: block;
 	font-weight: 500;
-	font-size: 2.5rem;
+	font-size: 2.0rem;
 	color: black;
 }
 
@@ -26,6 +26,7 @@
 #posts {
 	div {
 		box-sizing: content-box;
+		margin: 0 auto;
 	}
 	height: 50%;
 	padding: 10% 10% 0 10%;
@@ -33,7 +34,7 @@
 
 #post_3 {
 	padding: 5% 10%;
-	#post_3_text {
-		padding-top: 10%;
+	div {
+		margin: 0 auto;
 	}
 }
