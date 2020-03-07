@@ -1,14 +1,17 @@
-var BundleTracker = require('webpack-bundle-tracker')
+var path = require('path');
+var BundleTracker = require('webpack-bundle-tracker');
 
 module.exports = {
-    mode: "production",
 
     // Enable sourcemaps for debugging webpack's output.
     devtool: "source-map",
 
     resolve: {
         // Add '.ts' and '.tsx' as resolvable extensions.
-        extensions: [".ts", ".tsx"]
+        extensions: [".ts", ".tsx"],
+        alias: {
+            'components': path.resolve(__dirname, 'src/components/')
+        }
     },
 
     module: {
@@ -27,6 +30,17 @@ module.exports = {
                 enforce: "pre",
                 test: /\.js$/,
                 loader: "source-map-loader"
+            },
+            {
+                test: /\.s[ac]ss$/i,
+                use: [
+                  // Creates `style` nodes from JS strings
+                  'style-loader',
+                  // Translates CSS into CommonJS
+                  'css-loader',
+                  // Compiles Sass to CSS
+                  'sass-loader',
+               ],
             }
         ]
     },
