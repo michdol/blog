@@ -20,6 +20,8 @@ class PostsView(ListView):
 	model = Post
 	template_name = 'posts/list.html'
 	context_object_name = 'posts'
+	ordering = ('-created',)
+	paginate_by = 3
 
 
 class PostDetailView(DetailView):

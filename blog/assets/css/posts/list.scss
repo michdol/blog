@@ -3,7 +3,34 @@
 	ul {
 		list-style: none;
 		li {
-
+			a {
+				color: black;
+				text-decoration: none;
+				div.post {
+					box-shadow: 0;
+					transition: box-shadow .3s;
+					&:hover {
+						box-shadow: 0 0 3px #515151;
+					}
+					.col-3 {
+						padding: 0;
+					}
+				}
+				img {
+					width: 150px;
+					height: 150px;
+				}
+			}
+			.title {
+				margin: 0;
+			}
+			.description {
+				font-size: 12px;
+			}
 		}
 	}
+}
+
+#pagination {
+	margin: auto;
 }

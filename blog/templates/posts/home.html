@@ -6,40 +6,41 @@
 {% endblock %}
 
 {% block content %}
-<div class="container-fluid" id="latest_post" style="background-color: {{latest_post.get_home_page_background_color}};">
-	<div class="row align-items-center">
-		<div class="col-7 text-center">
-			<a class="title" href="{% url 'posts:detail' latest_post.id %}">{{ latest_post.title }}</a>
-			<span class="align-middle">{{latest_post.description}}</span>
+<div class="row" id="latest_post" style="background-color: {{latest_post.get_home_page_background_color}};">
+	<div class="col-lg-7 col-sm-6 text-center d-flex align-items-center">
+		<div class="container">
+			<div class="row">
+				<a class="w-100 title" href="{% url 'posts:detail' latest_post.id %}">{{ latest_post.title }}</a>
+			</div>
+			<div class="row">
+				<span class="">{{latest_post.description}}</span>
+			</div>
 		</div>
-		<div class="col-5" id="latest_post_image" style="background-image: url('{{latest_post.image_url}}');">
-		</div>
+	</div>
+	<div class="col-lg-5 col-sm-6 image-fluid" id="latest_post_image" style="background-image: url('{{latest_post.image_url}}');">
 	</div>
 </div>
-<div class="container" id="posts">
-	<!-- Post 1 and 2 -->
-	<div class="row h-50">
-		<div class="col-6 text-justify" id="post_1">
-			<img class="post_img_1" src="{{ post_1.image_url }}" />
-			<a class="title" href="{% url 'posts:detail' post_1.id %}">{{ post_1.title }}</a>
-			<span>{{post_1.description}}</span>
-		</div>
-		<div class="col-6 text-justify" id="post_2">
-			<img class="post_img_2" src="{{ post_2.image_url }}" />
-			<a class="title" href="{% url 'posts:detail' post_2.id %}">{{ post_2.title }}</a>
-			<span>{{post_2.description}}</span>
-		</div>
-	</div>
 
-	<!-- Post 3 -->
-	<div class="row h-50" id="post_3">
-		<div class="col-6 text-justify" id="post_3_text">
-			<a class="title" href="{% url 'posts:detail' post_3.id %}">{{ post_3.title }}</a>
-			<span>{{post_3.description}}</span>
-		</div>
-		<div class="col-6">
-			<img class="post_img_3" src="{{ post_3.image_url }}" />
-		</div>
+<div class="row" id="posts">
+	<div class="col-lg-6 col-sm-12 col-xs-12">
+		<img class="img_responsive" src="{{ post_1.image_url }}" />
+		<a class="title" href="{% url 'posts:detail' post_1.id %}">{{ post_1.title }}</a>
+		<span>{{post_1.description}}</span>
+	</div>
+	<div class="col-lg-5 col-sm-12 col-xs-12">
+		<img class="img_responsive" src="{{ post_2.image_url }}" />
+		<a class="title" href="{% url 'posts:detail' post_2.id %}">{{ post_2.title }}</a>
+		<span>{{post_2.description}}</span>
+	</div>
+</div>
+
+<div class="row" id="post_3">
+	<div class="col-lg-6 text-justify" id="post_3_text">
+		<a class="title" href="{% url 'posts:detail' post_3.id %}">{{ post_3.title }}</a>
+		<span>{{ post_3.description }}</span>
+	</div>
+	<div class="col-lg-6">
+		<img class="img_responsive" src="{{ post_3.image_url }}" />
 	</div>
 </div>
 {% endblock %}

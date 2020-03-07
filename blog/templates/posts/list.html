@@ -6,17 +6,53 @@
 {% endblock %}
 
 {% block content %}
-<section id="posts">
-	<h2>posts</h2>
-	<ul>
-		{% for post in posts %}
-			<li class="post">
-				<div class="container">
-					<img src="{{ post.image_url }}" />
-					<h1>{{ post.title }}</h1>
-				</div>
-			</li>
-		{% endfor %}
-	</ul>
-</section>
+<div class="container" id="posts">
+	<div class="row">
+		<ul>
+			{% for post in posts %}
+				<li>
+					<a href="{% url 'posts:detail' post.id %}">
+						<div class="row post">
+							<div class="col-3">
+								<img src="{{ post.image_url }}" />
+							</div>
+							<div class="col-9">
+								<p class="title">{{ post.title }}</p>
+								<p class="description">{{ post.description }}</p>
+							</div>
+						</div>
+					</a>
+				</li>
+			{% endfor %}
+		</ul>
+	</div>
+
+	<!-- PAGINATION -->
+	<div class="row">
+		<nav id="pagination">
+			<ul class="pagination">
+				{% if page_obj.has_previous %}
+				<li class="page-item">
+					<a class="page-link" href="?page={{ page_obj.previous_page_number }}" aria-label="Previous">
+						<span aria-hidden="true">&laquo;</span>
+						<span class="sr-only">Previous</span>
+					</a>
+				</li>
+				{% endif %}
+				<li class="page-item"><a class="page-link" href="?page=1">1</a></li>
+				<li class="page-item"><a class="page-link" href="?page=2">2</a></li>
+				<li class="page-item"><a class="page-link" href="?page=3">3</a></li>
+				{% if page_obj.has_next %}
+				<li class="page-item">
+					<a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Next">
+						<span aria-hidden="true">&raquo;</span>
+						<span class="sr-only">Next</span>
+					</a>
+				</li>
+				{% endif %}
+			</ul>
+		</nav>
+	</div>
+	<!-- PAGINATION -->
+</div>
 {% endblock %}

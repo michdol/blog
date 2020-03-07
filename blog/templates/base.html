@@ -14,19 +14,27 @@
 
 		<link href="{% sass_src 'css/base.scss' %}" rel="stylesheet" type="text/css" />
 		<link href="{% sass_src 'css/header.scss' %}" rel="stylesheet" type="text/css" />	
+		<link href="{% sass_src 'css/footer.scss' %}" rel="stylesheet" type="text/css" />	
 		{% block extra_css %}
 		{% endblock %}
 		<title>{% if title %}{{ title }}{% else %}Hello{% endif %}</title>
 	</head>
+	{% block body %}
 	<body>
-		<div id="main_container">
+		{% block nav %}
 			{% include "header.html" %}
+		{% endblock %}
 
-			{% block content %}
-			{% endblock %}
+		{% block body_content %}
+			<div class="container-fluid" id="body_content_container">
+				{% block content %}
+				{% endblock %}
+			</div>
+		{% endblock %}
 
+		{% block foot %}
 			{% include "footer.html" %}
-		</div>
+		{% endblock %}
 
 		<!-- Bootstrap Start -->
 		<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
@@ -37,4 +45,5 @@
 		<script src="{% static 'js/menu_button.js' %}"></script>
 		<!-- Custom end -->
 	</body>
+	{% endblock %}
 </html>
