@@ -8,9 +8,11 @@ module.exports = {
 
     resolve: {
         // Add '.ts' and '.tsx' as resolvable extensions.
-        extensions: [".ts", ".tsx"],
+        extensions: [".js", ".jsx", ".ts", ".tsx"],
         alias: {
-            'components': path.resolve(__dirname, 'src/components/')
+            'src': path.resolve(__dirname, 'src/'),
+            'components': path.resolve(__dirname, 'src/components/'),
+            'store': path.resolve(__dirname, 'src/store/')
         }
     },
 

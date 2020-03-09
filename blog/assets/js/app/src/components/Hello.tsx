@@ -1,12 +1,43 @@
 import * as React from "react";
+import { AnyAction, bindActionCreators, Dispatch } from 'redux';
+import { connect } from 'react-redux';
+
+import { AppState } from "store";
+import { getPosts } from 'store/posts/actions';
 
 
-export interface HelloProps { compiler: string; framework: string; }
+const mapStateToProps = (state: AppState) => ({
+	posts: state.posts.posts,
+	postsLoaded: state.posts.postsLoaded,
+});
 
-// 'HelloProps' describes the shape of props.
-// State is never set so we use the '{}' type.
-export class Hello extends React.Component<HelloProps, {}> {
+const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) =>
+	bindActionCreators(
+	{
+		getPosts
+	},
+	dispatch
+);
+
+type THelloProps = ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchToProps>;
+
+
+export class Hello extends React.PureComponent<THelloProps, {}> {
+	componentDidMount() {
+		this.props.getPosts();
+	}
+
 	render() {
-		return <h1>Hello from {this.props.compiler} and {this.props.framework}!</h1>;
+		const { posts, postsLoaded } = this.props;
+		return (
+			<div>
+				<h1>Hello!</h1>
+				<ul>
+					{ posts.map(post => <li key={post.id}>{post.title}</li>) }
+				</ul>
+			</div>
+		)
 	}
 }
+
+export default connect(mapStateToProps, mapDispatchToProps)(Hello);
