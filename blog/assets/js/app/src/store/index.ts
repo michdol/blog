@@ -2,7 +2,7 @@ import { combineReducers } from 'redux';
 import posts from 'store/posts/reducer';
 
 export enum EReduxActionTypes {
-  GET_POSTS = "GET_POSTS"
+  GET_POST = "GET_POST"
 }
 
 export interface IReduxBaseAction {

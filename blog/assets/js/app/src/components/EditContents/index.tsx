@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 
 import { AppState } from "store";
 import { getPost } from 'store/posts/actions';
+import PostContent from "components/PostContent";
 
 
 const mapStateToProps = (state: AppState) => ({
@@ -19,26 +20,26 @@ const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) =>
 	dispatch
 );
 
-type THelloProps = ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchToProps>;
+type TEditContentsProps = ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchToProps>;
 
-
-export class Hello extends React.PureComponent<THelloProps, {}> {
+class EditContents extends React.Component<TEditContentsProps, {}> {
 	componentDidMount() {
 		this.props.getPost();
 	}
 
 	render() {
 		const { post, postLoaded } = this.props;
-		const contents = postLoaded ? post.contents : [];
+		if (!postLoaded) {
+			return null
+		}
 		return (
 			<div>
-				<h1>Hello!</h1>
 				<ul>
-					{ contents.map(content => <li key={content.id}>{content.headline}</li>) }
+					{ post.contents.map(content => <li key={content.id}><PostContent content={content} /></li>)}
 				</ul>
 			</div>
 		)
 	}
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Hello);
+export default connect(mapStateToProps, mapDispatchToProps)(EditContents);

@@ -1,5 +1,5 @@
 import { EReduxActionTypes } from 'store';
-import { IReduxGetPostsAction } from './actions';
+import { IReduxGetPostAction } from './actions';
 
 
 export interface IPostContent {
@@ -30,12 +30,12 @@ const initialState: IReduxPostsState = {
   postsLoaded: false
 };
 
-type TPostsReducerActions = IReduxGetPostsAction | null;
+type TPostsReducerActions = IReduxGetPostAction | null;
 
 export default function(state: IReduxPostsState = initialState, action: TPostsReducerActions) {
   switch (action.type) {
-    case EReduxActionTypes.GET_POSTS:
-      return { ...state, posts: action.data, postsLoaded: true };
+    case EReduxActionTypes.GET_POST:
+      return { ...state, post: action.data, postLoaded: true };
     default:
       return state;
   }

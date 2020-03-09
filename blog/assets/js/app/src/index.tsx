@@ -6,6 +6,7 @@ import { Provider } from 'react-redux';
 import './index.scss';
 import rootReducer from './store';
 import Hello from "./components/Hello";
+import EditContents from "./components/EditContents";
 
 
 const store = createStore(
@@ -17,7 +18,7 @@ const EditContentsDOM = document.getElementById("edit-contents");
 if (EditContentsDOM) {
 	ReactDOM.render(
 		<Provider store={store}>
-			<Hello />
+			<EditContents />
 		</Provider>,
 		EditContentsDOM
 	);

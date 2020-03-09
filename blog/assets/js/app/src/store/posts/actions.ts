@@ -1,20 +1,15 @@
 import { IPost } from './reducer';
 import { EReduxActionTypes, IReduxBaseAction } from 'store';
 
-export interface IReduxGetPostsAction extends IReduxBaseAction {
-	type: EReduxActionTypes.GET_POSTS;
-	data: IPost[];
+export interface IReduxGetPostAction extends IReduxBaseAction {
+	type: EReduxActionTypes.GET_POST;
+	data: IPost;
 }
 
-export function getPosts(): IReduxGetPostsAction {
-	const mydata = JSON.parse(document.getElementById('contents').textContent);
-	const post: IPost = {
-		id: 1,
-		title: "Jestem chujem",
-		contents: mydata
-	}
+export function getPost(): IReduxGetPostAction {
+	const post = JSON.parse(document.getElementById('post_data').textContent);
 	return {
-		type: EReduxActionTypes.GET_POSTS,
-		data: [post]
+		type: EReduxActionTypes.GET_POST,
+		data: post
 	}
 }
