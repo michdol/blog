@@ -5,6 +5,9 @@ import { IReduxGetPostsAction } from './actions';
 export interface IPostContent {
   id: number;
   headline: string;
+  text: string;
+  is_hidden: boolean;
+  order: number;
 }
 
 export interface IPost {

@@ -29,11 +29,12 @@ export class Hello extends React.PureComponent<THelloProps, {}> {
 
 	render() {
 		const { posts, postsLoaded } = this.props;
+		const contents = posts.length ? posts[0].contents : [];
 		return (
 			<div>
 				<h1>Hello!</h1>
 				<ul>
-					{ posts.map(post => <li key={post.id}>{post.title}</li>) }
+					{ contents.map(content => <li key={content.id}>{content.headline}</li>) }
 				</ul>
 			</div>
 		)

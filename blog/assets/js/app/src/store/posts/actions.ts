@@ -7,10 +7,11 @@ export interface IReduxGetPostsAction extends IReduxBaseAction {
 }
 
 export function getPosts(): IReduxGetPostsAction {
+	const mydata = JSON.parse(document.getElementById('contents').textContent);
 	const post: IPost = {
 		id: 1,
 		title: "Jestem chujem",
-		contents: []
+		contents: mydata
 	}
 	return {
 		type: EReduxActionTypes.GET_POSTS,

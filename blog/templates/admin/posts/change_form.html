@@ -5,6 +5,7 @@
 
 {% block after_related_objects %}
 <div id="edit-contents"></div>
+{{ contents | json_script:"contents" }}
 {% endblock %}
 
 
