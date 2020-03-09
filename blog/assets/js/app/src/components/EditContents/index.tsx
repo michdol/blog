@@ -32,6 +32,7 @@ class EditContents extends React.Component<TEditContentsProps, {}> {
 		if (!postLoaded) {
 			return null
 		}
+		console.log(post.contents);
 		return (
 			<div>
 				<ul>

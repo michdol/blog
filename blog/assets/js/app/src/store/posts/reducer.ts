@@ -1,5 +1,5 @@
 import { EReduxActionTypes } from 'store';
-import { IReduxGetPostAction } from './actions';
+import { IReduxGetPostAction, IReduxSetPostContentHeadline } from './actions';
 
 
 export interface IPostContent {
@@ -30,13 +30,27 @@ const initialState: IReduxPostsState = {
   postsLoaded: false
 };
 
-type TPostsReducerActions = IReduxGetPostAction | null;
+type TPostsReducerActions = IReduxGetPostAction | IReduxSetPostContentHeadline;
 
 export default function(state: IReduxPostsState = initialState, action: TPostsReducerActions) {
   switch (action.type) {
     case EReduxActionTypes.GET_POST:
       return { ...state, post: action.data, postLoaded: true };
+    case EReduxActionTypes.SET_POST_CONTENT_HEADLINE:
+      let [index, content] = getContentById(action.id, state.post.contents);
+      content.headline = action.data;
+      let post = state.post;
+      post.contents[index] = content;
+      return { ...state, post: post }
     default:
       return state;
+  }
+}
+
+function getContentById(id: number, contents: IPostContent[]): [number, IPostContent] {
+  for (let [key, content] of contents.entries()) {
+    if (content.id === id) {
+      return [key, content]
+    }
   }
 }

@@ -13,3 +13,17 @@ export function getPost(): IReduxGetPostAction {
 		data: post
 	}
 }
+
+export interface IReduxSetPostContentHeadline extends IReduxBaseAction {
+	type: EReduxActionTypes.SET_POST_CONTENT_HEADLINE;
+	data: string;
+	id: number;
+}
+
+export function setPostContentHeadline(id: number, headline: string): IReduxSetPostContentHeadline {
+	return {
+		type: EReduxActionTypes.SET_POST_CONTENT_HEADLINE,
+		data: headline,
+		id: id
+	}
+}

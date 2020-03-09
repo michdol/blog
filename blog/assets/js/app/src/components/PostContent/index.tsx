@@ -11,9 +11,10 @@ type Props = {
 
 export default class PostContent extends React.Component<Props, {}> {
 	render() {
+		let content = this.props.content;
 		return (
 			<div>
-				<Headline headline={this.props.content.headline} />
+				<Headline contentId={content.id} headline={content.headline} />
 			</div>
 		)
 	}
