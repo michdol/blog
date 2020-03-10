@@ -66,7 +66,7 @@ export class Headline extends React.Component<THeadlineProps, State> {
 			)
 		}
 		return (
-			<div onClick={this.openEdit}>{ headline }</div>
+			<div onClick={this.openEdit}><pre>{ headline }</pre></div>
 		)
 	}
 }

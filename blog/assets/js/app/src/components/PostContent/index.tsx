@@ -1,21 +1,61 @@
 import * as React from "react";
+import { AnyAction, bindActionCreators, Dispatch } from 'redux';
+import { connect } from 'react-redux';
 
+import { AppState } from "store";
 import { IPostContent } from "store/posts/reducer";
 import Headline from "./Headline";
+import { reorderPostContents } from 'store/posts/actions';
 
 
-type Props = {
+type TOwnProps = {
 	content: IPostContent
 };
 
+const mapStateToProps = (state: AppState, ownProps: TOwnProps) => ({
+	content: ownProps.content
+});
 
-export default class PostContent extends React.Component<Props, {}> {
+const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) =>
+	bindActionCreators(
+	{
+		reorderPostContents
+	},
+	dispatch
+);
+
+type TPostContentProps = ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchToProps>;
+
+export class PostContent extends React.Component<TPostContentProps, {}> {
+	constructor(props: any) {
+		super(props);
+		this.moveContent = this.moveContent.bind(this);
+		this.moveUp = this.moveUp.bind(this);
+		this.moveDown = this.moveDown.bind(this);
+	}
+
+	moveContent(moveUp: boolean) {
+		this.props.reorderPostContents(this.props.content.id, moveUp);
+	}
+
+	moveUp() {
+		this.moveContent(true);
+	}
+
+	moveDown() {
+		this.moveContent(false);
+	}
+
 	render() {
 		let content = this.props.content;
 		return (
 			<div>
 				<Headline contentId={content.id} headline={content.headline} />
+				<a onClick={this.moveUp}>Move Up</a>
+				<a onClick={this.moveDown}>Move Down</a>
 			</div>
 		)
 	}
 }
+
+export default connect(mapStateToProps, mapDispatchToProps)(PostContent);

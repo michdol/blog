@@ -27,3 +27,17 @@ export function setPostContentHeadline(id: number, headline: string): IReduxSetP
 		id: id
 	}
 }
+
+export interface IReduxReorderPostContents extends IReduxBaseAction {
+	type: EReduxActionTypes.REORDER_POST_CONTENTS;
+	id: number;
+	moveUp: boolean;
+}
+
+export function reorderPostContents(id: number, moveUp: boolean): IReduxReorderPostContents {
+	return {
+		type: EReduxActionTypes.REORDER_POST_CONTENTS,
+		id: id,
+		moveUp: moveUp
+	}
+}

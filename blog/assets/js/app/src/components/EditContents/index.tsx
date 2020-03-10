@@ -28,16 +28,23 @@ class EditContents extends React.Component<TEditContentsProps, {}> {
 		this.props.getPost();
 	}
 
+	renderPostContents(contents: any[]) {
+		return contents.map((content, idx) => {
+			return <li key={idx}>
+				<PostContent content={content} />
+			</li>
+		})
+	}
+
 	render() {
 		const { post, postLoaded } = this.props;
 		if (!postLoaded) {
 			return null
 		}
-		console.log(post.contents);
 		return (
 			<div>
 				<ul>
-					{ post.contents.map((content: IPostContent, idx: number) => <li key={idx}><PostContent content={content} /></li>)}
+					{ this.renderPostContents(post.contents) }
 				</ul>
 			</div>
 		)
