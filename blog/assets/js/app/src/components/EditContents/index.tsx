@@ -3,6 +3,7 @@ import { AnyAction, bindActionCreators, Dispatch } from 'redux';
 import { connect } from 'react-redux';
 
 import { AppState } from "store";
+import { IPostContent } from "store/posts/reducer";
 import { getPost } from 'store/posts/actions';
 import PostContent from "components/PostContent";
 
@@ -36,7 +37,7 @@ class EditContents extends React.Component<TEditContentsProps, {}> {
 		return (
 			<div>
 				<ul>
-					{ post.contents.map(content => <li key={content.id}><PostContent content={content} /></li>)}
+					{ post.contents.map((content: IPostContent, idx: number) => <li key={idx}><PostContent content={content} /></li>)}
 				</ul>
 			</div>
 		)

@@ -17,7 +17,7 @@ export interface IPost {
 }
 
 export interface IReduxPostsState {
-  post?: IPost;
+  post: IPost;
   postLoaded: boolean;
   posts: IPost[];
   postsLoaded: boolean;
@@ -37,20 +37,22 @@ export default function(state: IReduxPostsState = initialState, action: TPostsRe
     case EReduxActionTypes.GET_POST:
       return { ...state, post: action.data, postLoaded: true };
     case EReduxActionTypes.SET_POST_CONTENT_HEADLINE:
-      let [index, content] = getContentById(action.id, state.post.contents);
-      content.headline = action.data;
-      let post = state.post;
-      post.contents[index] = content;
-      return { ...state, post: post }
+      return {
+        ...state,
+        post: {
+          ...state.post,
+          contents: state.post.contents.map((content: IPostContent) => {
+            if (content.id === action.id) {
+              return {
+                ...content,
+                headline: action.data
+              }
+            }
+            return content;
+          })
+        }
+      }
     default:
       return state;
-  }
-}
-
-function getContentById(id: number, contents: IPostContent[]): [number, IPostContent] {
-  for (let [key, content] of contents.entries()) {
-    if (content.id === id) {
-      return [key, content]
-    }
   }
 }

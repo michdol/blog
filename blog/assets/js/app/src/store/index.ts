@@ -3,7 +3,7 @@ import posts from 'store/posts/reducer';
 
 export enum EReduxActionTypes {
   GET_POST = "GET_POST",
-  SET_POST_CONTENT_HEADLINE = "React.FormEvent<HTMLInputElement>"
+  SET_POST_CONTENT_HEADLINE = "SET_POST_CONTENT_HEADLINE"
 }
 
 export interface IReduxBaseAction {

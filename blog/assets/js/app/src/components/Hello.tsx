@@ -1,3 +1,4 @@
+/*
 import * as React from "react";
 import { AnyAction, bindActionCreators, Dispatch } from 'redux';
 import { connect } from 'react-redux';
@@ -41,4 +42,4 @@ export class Hello extends React.PureComponent<THelloProps, {}> {
 	}
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Hello);
+export default connect(mapStateToProps, mapDispatchToProps)(Hello);*/
