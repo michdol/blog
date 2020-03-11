@@ -41,9 +41,12 @@ export default function(state: IReduxPostsState = initialState, action: TPostsRe
     case EReduxActionTypes.SET_POST_CONTENT_HEADLINE:
       return updatePostContentTextField(state, action);
     case EReduxActionTypes.REORDER_POST_CONTENTS:
-      //let newContents: IPostContent[] = Array.from(state.post.contents);
-      //let newContents: IPostContent[] = JSON.parse(JSON.stringify(state.post.contents));
-      let newContents: IPostContent[] = moveObjectInArrayByOnePosition(JSON.parse(JSON.stringify(state.post.contents)), action.id, action.moveUp);
+      let newContents: IPostContent[] = Array.from(state.post.contents);
+      newContents = swapObjectsInArray(newContents, action.id, action.moveUp);
+      if (newContents === undefined) {
+        // Do nothing
+        return { ...state }
+      }
       return {
         ...state,
         post: {
@@ -75,37 +78,28 @@ function updatePostContentTextField(state: IReduxPostsState, action: IReduxSetPo
   }
 }
 
-function moveObjectInArrayByOnePosition(array: any[], id: number, moveUp: boolean): IPostContent[] {
-  let targetIdx: number = getObjectIdxById(array, id);
-  let otherIdx: number;
-  if (targetIdx === -1) {
-    console.log('Object not found');
-    return
+export function swapObjectsInArray(array: any[], id: number, moveUp: boolean): IPostContent[] {
+  let currentIdx: number = getObjectIdxById(array, id);
+  let lastIdx: number = array.length - 1;
+  let newIdx: number = getSwapTargetIndex(currentIdx, lastIdx, moveUp);
+  if (newIdx !== undefined) {
+    [array[currentIdx], array[newIdx]] = [array[newIdx], array[currentIdx]];
   }
-  let targetContent: IPostContent;
-  let otherContent: IPostContent;
-  if (moveUp === true) {
-    if (targetIdx === 0) {
-      return array;
-    }
-    otherIdx = targetIdx - 1;
-  } else {
-    if (targetIdx === array.length - 1) {
-      return array;
-    }
-    otherIdx = targetIdx + 1;
-  }
-  /*
-  targetContent = array[targetIdx];
-  otherContent = array[otherIdx];
-  array[targetIdx] = otherContent;
-  array[otherIdx] = targetContent;
-  [elements[0], elements[3]] = [elements[3], elements[0]];*/
-  [array[targetIdx], array[otherIdx]] = [array[otherIdx], array[targetIdx]];
   return array;
 }
 
-function getObjectIdxById(array: any[], id: number): number {
+export function getSwapTargetIndex(initialIdx: number, lastIdx: number, moveUp: boolean): number {
+  let targetIdx: number;
+  if (moveUp === true) {
+    targetIdx = initialIdx === 0 ? undefined : initialIdx - 1;
+  } else {
+    targetIdx = initialIdx === lastIdx ? undefined : initialIdx + 1;
+  }
+  return targetIdx
+}
+
+// TODO: test this and move unrelated functions to some kind of utils.
+export function getObjectIdxById(array: any[], id: number): number {
   let targetIdx: number = -1;
   for (let [key, obj] of array.entries()) {
     if (obj.id === id) {
