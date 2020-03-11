@@ -24,8 +24,30 @@ const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) =>
 type TEditContentsProps = ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchToProps>;
 
 class EditContents extends React.Component<TEditContentsProps, {}> {
+	private submitButton: any;
+
+	constructor(props: TEditContentsProps) {
+		super(props);
+		this.djangoSubmitButtonListener = this.djangoSubmitButtonListener.bind(this);
+		// TODO: search if there is better way to find that element
+		this.submitButton = document.getElementsByName('_save')[0];
+	}
+
 	componentDidMount() {
 		this.props.getPost();
+		this.submitButton.addEventListener("click", this.djangoSubmitButtonListener);
+	}
+
+	componentWillUnmount() {
+		this.submitButton.removeEventListener("click", this.djangoSubmitButtonListener);
+	}
+
+	djangoSubmitButtonListener(e: any) {
+		console.log('tutej', e);
+		this.handleClick();
+	}
+
+	handleClick() {
 	}
 
 	renderPostContents(contents: any[]) {
