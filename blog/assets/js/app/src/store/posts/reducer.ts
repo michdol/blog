@@ -24,14 +24,12 @@ export interface IReduxPostsState {
   post: IPost;
   postLoaded: boolean;
   posts: IPost[];
-  postsLoaded: boolean;
 }
 
 const initialState: IReduxPostsState = {
   post: undefined,
   postLoaded: false,
   posts: [],
-  postsLoaded: false
 };
 
 type TPostsReducerActions = IReduxGetPostAction | IReduxSetPostContentHeadline | IReduxReorderPostContents;
@@ -43,8 +41,9 @@ export default function(state: IReduxPostsState = initialState, action: TPostsRe
     case EReduxActionTypes.SET_POST_CONTENT_HEADLINE:
       return updatePostContentTextField(state, action);
     case EReduxActionTypes.REORDER_POST_CONTENTS:
-      let newContents: IPostContent[] = Object.assign([], state.post.contents);
-      moveObjectInArrayByOnePosition(newContents, action.id, action.moveUp);
+      //let newContents: IPostContent[] = Array.from(state.post.contents);
+      //let newContents: IPostContent[] = JSON.parse(JSON.stringify(state.post.contents));
+      let newContents: IPostContent[] = moveObjectInArrayByOnePosition(JSON.parse(JSON.stringify(state.post.contents)), action.id, action.moveUp);
       return {
         ...state,
         post: {
@@ -76,7 +75,7 @@ function updatePostContentTextField(state: IReduxPostsState, action: IReduxSetPo
   }
 }
 
-function moveObjectInArrayByOnePosition(array: any[], id: number, moveUp: boolean) {
+function moveObjectInArrayByOnePosition(array: any[], id: number, moveUp: boolean): IPostContent[] {
   let targetIdx: number = getObjectIdxById(array, id);
   let otherIdx: number;
   if (targetIdx === -1) {
@@ -87,19 +86,23 @@ function moveObjectInArrayByOnePosition(array: any[], id: number, moveUp: boolea
   let otherContent: IPostContent;
   if (moveUp === true) {
     if (targetIdx === 0) {
-      return
+      return array;
     }
     otherIdx = targetIdx - 1;
   } else {
     if (targetIdx === array.length - 1) {
-      return
+      return array;
     }
     otherIdx = targetIdx + 1;
   }
+  /*
   targetContent = array[targetIdx];
   otherContent = array[otherIdx];
   array[targetIdx] = otherContent;
   array[otherIdx] = targetContent;
+  [elements[0], elements[3]] = [elements[3], elements[0]];*/
+  [array[targetIdx], array[otherIdx]] = [array[otherIdx], array[targetIdx]];
+  return array;
 }
 
 function getObjectIdxById(array: any[], id: number): number {

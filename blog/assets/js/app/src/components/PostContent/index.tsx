@@ -9,11 +9,12 @@ import { reorderPostContents } from 'store/posts/actions';
 
 
 type TOwnProps = {
-	content: IPostContent
+	idx: number;
 };
 
 const mapStateToProps = (state: AppState, ownProps: TOwnProps) => ({
-	content: ownProps.content
+	content: state.posts.post.contents[ownProps.idx],
+	idx: ownProps.idx,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) =>
@@ -52,6 +53,7 @@ export class PostContent extends React.Component<TPostContentProps, {}> {
 			<div>
 				<Headline contentId={content.id} headline={content.headline} />
 				<a onClick={this.moveUp}>Move Up</a>
+				<span> 〰 </span>
 				<a onClick={this.moveDown}>Move Down</a>
 			</div>
 		)

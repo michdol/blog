@@ -12,7 +12,8 @@ type Props = {
 };
 
 const mapStateToProps = (state: AppState, ownProps: Props) => ({
-	contentId: ownProps.contentId
+	contentId: ownProps.contentId,
+	headline: ownProps.headline
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) =>
@@ -56,7 +57,6 @@ export class Headline extends React.Component<THeadlineProps, State> {
 	}
 
 	render() {
-		const { headline } = this.state;
 		if (this.state.editActive) {
 			return (
 				<div>
@@ -65,6 +65,7 @@ export class Headline extends React.Component<THeadlineProps, State> {
 				</div>
 			)
 		}
+		const { headline } = this.props;
 		return (
 			<div onClick={this.openEdit}><pre>{ headline }</pre></div>
 		)
