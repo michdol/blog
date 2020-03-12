@@ -1,11 +1,23 @@
 {% extends "admin/change_form.html" %}
-{% load static %}
+{% load static sass_tags %}
 {% load render_bundle from webpack_loader %}
+
+
+{% block extrastyle %}
+	{{ block.super }}
+	<link href="{% sass_src 'css/admin_change_form.scss' %}" rel="stylesheet" type="text/css" />
+{% endblock %}
+
+
+		<link href="{% sass_src 'css/base.scss' %}" rel="stylesheet" type="text/css" />
+{% block field_sets %}
+	{{ block.super }}
+	{% include "admin/posts/contents_fieldset.html" %}
+{% endblock %}
 
 
 {% block after_related_objects %}
 <div id="edit-contents"></div>
-<input id="contents-json" type="hidden" value="" />
 {{ post_dict | json_script:"post_data" }}
 {% endblock %}
 

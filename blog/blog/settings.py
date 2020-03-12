@@ -16,6 +16,8 @@ from .credentials import *
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+SITE_NAME = 'blog'
+SITE_ID = 1
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
@@ -23,26 +25,39 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['api.localhost', 'localhost', '127.0.0.1']
 
 
 # Application definition
-
-INSTALLED_APPS = [
+DJANGO_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'sass_processor',
-    'webpack_loader',
-    'posts',
+    'django.contrib.sites',
 ]
+
+THIRD_PARTY_APPS = [
+    'corsheaders',
+    'rest_framework',
+    'sass_processor',
+    'subdomains',
+    'webpack_loader',
+]
+
+LOCAL_APPS = [
+    'posts'
+]
+
+INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'subdomains.middleware.SubdomainURLRoutingMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -50,7 +65,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'blog.urls'
+ROOT_URLCONF = 'blog.urls.frontend'
 
 TEMPLATES = [
     {
@@ -76,6 +91,12 @@ STATICFILES_FINDERS = [
 
 WSGI_APPLICATION = 'blog.wsgi.application'
 
+# Subdomains
+SUBDOMAIN_URLCONFS = {
+    None: '%s.urls.frontend' % SITE_NAME, # no subdomain, e.g. ``example.com``
+    'www': '%s.urls.frontend' % SITE_NAME,
+    'api': '%s.urls.api' % SITE_NAME,
+}
 
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
@@ -133,6 +154,11 @@ SITE_ROOT = os.path.dirname(os.path.realpath(__file__))
 STATICFILES_DIRS = (
   os.path.join(BASE_DIR, 'assets/'),
 )
+
+# CORSHEADERS
+CORS_ALLOW_CREDENTIALS = True
+# TODO: Change this for testing and production
+CORS_ORIGIN_ALLOW_ALL = True
 
 # DJANGO SASS PROCESSOR
 SASS_PROCESSOR_ROOT = os.path.join(BASE_DIR, 'static')
