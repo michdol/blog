@@ -39,7 +39,7 @@ class SubdomainApiTestCase(SubdomainTestMixin, APITestCase):
 
 
 class PostContentsDetailTest(SubdomainApiTestCase):
-	fixtures = ('posts',)
+	fixtures = ('posts', 'post_contents')
 	"""
 	data = {
 		"create": [],
@@ -87,3 +87,72 @@ class PostContentsDetailTest(SubdomainApiTestCase):
 		self.assertEqual(content.text, new_content['text'])
 		self.assertEqual(content.headline, new_content['headline'])
 		self.assertEqual(content.order, 0)
+
+	def test_post_add_new_content_to_the_top(self):
+		post_id = 1
+		content = PostContent.objects.create(headline='first content', post_id=post_id, order=0)
+
+		new_content = {
+			"text": "new content text",
+			"headline": "new content headline",
+			"ref": "1234-AED3AED3-4123AED3",
+			"post_id": post_id
+		}
+		data = {
+			"create": [new_content],
+			"delete": [],
+			"update": [],
+			"ordering": {"1234-AED3AED3-4123AED3": 0, content.id: 1}
+		}	
+
+		url = reverse('posts:contents_detail', args=[post_id], subdomain='api')
+		response = self.client.post(url, data, format="json")
+		self.assertEqual(response.status_code, status.HTTP_200_OK)
+		contents = PostContent.objects.filter(post_id=post_id).order_by('order')
+		self.assertEqual(contents.count(), 2)
+		self.assertEqual(contents[0].text, new_content['text'])
+		self.assertEqual(contents[0].headline, new_content['headline'])
+		self.assertEqual(contents[0].order, 0)
+		self.assertEqual(contents[1].headline, 'first content')
+		self.assertEqual(contents[1].order, 1)
+
+	def test_post_delete_middle_content_add_new_at_the_end(self):
+		post_id = 2
+
+		new_content = {
+			"text": "new content text",
+			"headline": "new content headline",
+			"ref": "1234-AED3AED3-4123AED3",
+			"post_id": post_id,
+			"order": 1
+		}
+		# Delete two middle contents
+		# Create new headline in the middle
+		# Swap first content with last one
+		data = {
+			"create": [new_content],
+			"delete": [3, 2],
+			"update": [{
+				"id": 1,
+				"headline": "new first headline",
+				"order": 2,
+				"post_id": post_id
+			}],
+			"ordering": {
+				1: 2,
+				"1234-AED3AED3-4123AED3": 1,
+				4: 0
+			}
+		}	
+
+		url = reverse('posts:contents_detail', args=[post_id], subdomain='api')
+		response = self.client.post(url, data, format="json")
+		self.assertEqual(response.status_code, status.HTTP_200_OK)
+		contents = PostContent.objects.filter(post_id=post_id).order_by('order')
+		self.assertEqual(contents.count(), 3)
+		self.assertEqual(contents[0].headline, "fourth headline")
+		self.assertEqual(contents[0].order, 0)
+		self.assertEqual(contents[1].headline, "new content headline")
+		self.assertEqual(contents[1].order, 1)
+		self.assertEqual(contents[2].headline, "new first headline")
+		self.assertEqual(contents[2].order, 2)
