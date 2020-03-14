@@ -14,6 +14,7 @@ module.exports = {
   "moduleDirectories": ['node_modules', 'src'],
   "moduleNameMapper": {
     "src": "<rootDir>/src/",
+    "api": "<rootDir>/src/api/",
     "store": "<rootDir>/src/store/",
     "components": "<rootDir>/src/components/",
   },

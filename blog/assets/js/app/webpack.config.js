@@ -10,7 +10,9 @@ module.exports = {
         // Add '.ts' and '.tsx' as resolvable extensions.
         extensions: [".js", ".jsx", ".ts", ".tsx"],
         alias: {
+            // Add the same to jest.config
             'src': path.resolve(__dirname, 'src/'),
+            'api': path.resolve(__dirname, 'src/api/'),
             'components': path.resolve(__dirname, 'src/components/'),
             'store': path.resolve(__dirname, 'src/store/')
         }

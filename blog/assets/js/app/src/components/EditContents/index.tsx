@@ -2,6 +2,7 @@ import * as React from "react";
 import { AnyAction, bindActionCreators, Dispatch } from 'redux';
 import { connect } from 'react-redux';
 
+import { postContentsToServer } from 'api';
 import { AppState } from "store";
 import { IPostContent } from "store/posts/reducer";
 import { getPost } from 'store/posts/actions';
@@ -29,6 +30,7 @@ class EditContents extends React.Component<TEditContentsProps, {}> {
 	constructor(props: TEditContentsProps) {
 		super(props);
 		this.djangoSubmitButtonListener = this.djangoSubmitButtonListener.bind(this);
+		this.post = this.post.bind(this);
 		// TODO: search if there is better way to find that element
 		this.submitButton = document.getElementsByName('_save')[0];
 	}
@@ -58,6 +60,10 @@ class EditContents extends React.Component<TEditContentsProps, {}> {
 		})
 	}
 
+	post() {
+		postContentsToServer(this.props.post);
+	}
+
 	render() {
 		const { post, postLoaded } = this.props;
 		if (!postLoaded) {
@@ -68,6 +74,7 @@ class EditContents extends React.Component<TEditContentsProps, {}> {
 				<ul>
 					{ this.renderPostContents(post.contents) }
 				</ul>
+				<a onClick={this.post}>Post</a>
 			</div>
 		)
 	}

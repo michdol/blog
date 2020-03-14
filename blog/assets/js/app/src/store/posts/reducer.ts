@@ -22,33 +22,22 @@ export interface IPost {
   contents: IPostContent[];
 }
 
-export interface IPayload {
-  create: IPostContent[];
-  update: IPostContent[];
-  delete: number[];
-  ordering: any;
-}
-
 export interface IReduxPostsState {
   post: IPost;
   postLoaded: boolean;
   posts: IPost[];
-  payload: IPayload;
 }
 
 const initialState: IReduxPostsState = {
-  post: undefined,
+  post: {} as any,
   postLoaded: false,
-  posts: [],
-  payload: {
-    create: [],
-    update: [],
-    delete: [],
-    ordering: {}
-  }
+  posts: []
 };
 
-type TPostsReducerActions = IReduxGetPostAction | IReduxSetPostContentHeadline | IReduxReorderPostContents;
+type TPostsReducerActions =
+  IReduxGetPostAction |
+  IReduxSetPostContentHeadline |
+  IReduxReorderPostContents;
 
 export default function(state: IReduxPostsState = initialState, action: TPostsReducerActions) {
   switch (action.type) {
