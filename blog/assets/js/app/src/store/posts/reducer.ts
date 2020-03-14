@@ -108,6 +108,17 @@ export function swapObjectsInArray(array: any[], id: number, moveUp: boolean): I
     [array[currentIdx], array[newIdx]] = [array[newIdx], array[currentIdx]];
   }
   return array;
+  /* I don't fucking know, it's working now
+  let topContent = moveUp ? array[currentIdx] : array[newIdx];
+  let bottomContent = moveUp ? array[newIdx] : array[currentIdx];
+  console.log(topContent, bottomContent);
+  let sliceIdx = currentIdx < newIdx ? currentIdx : newIdx;
+  return [
+    ...array.slice(0, sliceIdx),
+    topContent,
+    bottomContent,
+    ...array.slice(sliceIdx + 2)
+  ]*/
 }
 
 export function getSwapTargetIndex(initialIdx: number, lastIdx: number, moveUp: boolean): number {

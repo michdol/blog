@@ -10,10 +10,12 @@ import { IPostContent } from 'store/posts/reducer';
 
 type Props = {
 	content: IPostContent;
+	onSave: any;
 };
 
 const mapStateToProps = (state: AppState, ownProps: Props) => ({
-	content: ownProps.content
+	content: ownProps.content,
+	onSave: ownProps.onSave
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) =>
@@ -25,7 +27,6 @@ const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) =>
 );
 
 type State = {
-	editActive: boolean;
 	headline: string;
 }
 
@@ -35,12 +36,10 @@ export class Headline extends React.Component<THeadlineProps, State> {
 	constructor(props: any) {
 		super(props);
 		this.state = {
-			editActive: false,
 			headline: props.content.headline
 		}
 		this.updateHeadline = this.updateHeadline.bind(this);
 		this.saveChanges = this.saveChanges.bind(this);
-		this.openEdit = this.openEdit.bind(this);
 	}
 
 	updateHeadline(e: any) {
@@ -51,26 +50,18 @@ export class Headline extends React.Component<THeadlineProps, State> {
 		let content = this.props.content;
 		content.headline = this.state.headline;
 		this.props.setPostContentHeadline(content);
-		this.setState({editActive: false});
-	}
-
-	openEdit() {
-		this.setState({editActive: true});
+		this.props.onSave();
 	}
 
 	render() {
-		if (this.state.editActive) {
-			return (
-				<div>
-					<input type="text" value={this.state.headline} onChange={this.updateHeadline} />
-					<button onClick={this.saveChanges}>Save</button>
-				</div>
-			)
-		}
 		return (
-			<div onClick={this.openEdit}><pre>{ this.props.content.headline }</pre></div>
+			<div>
+				<input type="text" value={this.state.headline} onChange={this.updateHeadline} />
+				<button onClick={this.saveChanges}>Save</button>
+			</div>
 		)
 	}
 }
+
 
 export default connect(mapStateToProps, mapDispatchToProps)(Headline);

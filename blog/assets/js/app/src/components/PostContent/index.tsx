@@ -25,14 +25,23 @@ const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) =>
 	dispatch
 );
 
+type TState = {
+	editActive: boolean;
+}
+
 type TPostContentProps = ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchToProps>;
 
-export class PostContent extends React.Component<TPostContentProps, {}> {
+export class PostContent extends React.Component<TPostContentProps, TState> {
 	constructor(props: any) {
 		super(props);
+		this.state = {
+			editActive: false
+		}
 		this.moveContent = this.moveContent.bind(this);
 		this.moveUp = this.moveUp.bind(this);
 		this.moveDown = this.moveDown.bind(this);
+		this.openEdit = this.openEdit.bind(this);
+		this.closeEdit = this.closeEdit.bind(this);
 	}
 
 	moveContent(moveUp: boolean) {
@@ -47,11 +56,20 @@ export class PostContent extends React.Component<TPostContentProps, {}> {
 		this.moveContent(false);
 	}
 
+	openEdit() {
+		this.setState({editActive: true});
+	}
+
+	closeEdit() {
+		this.setState({editActive: false});
+	}
+
 	render() {
 		let content = this.props.content;
 		return (
 			<div>
-				<Headline content={content} />
+				{ this.state.editActive && <Headline content={content} onSave={this.closeEdit} /> }
+				{ !this.state.editActive && <span onClick={this.openEdit}>{ content.headline }</span> }
 				<a onClick={this.moveUp}>Move Up</a>
 				<span> 〰 </span>
 				<a onClick={this.moveDown}>Move Down</a>
