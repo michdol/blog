@@ -63,5 +63,4 @@ class PostContentsDetail(generics.CreateAPIView):
                 # TODO: check if you need to change it to ints
                 order = ordering.get(str(content.id))
             content.order = order
-            # TODO: use bulk_update
-            content.save()
+        PostContent.objects.bulk_update(queryset, ['order'])
