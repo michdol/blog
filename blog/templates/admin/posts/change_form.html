@@ -19,6 +19,7 @@
 {% block after_related_objects %}
 <div id="edit-contents"></div>
 {{ post_dict | json_script:"post_data" }}
+{{ API_URL | json_script:"API_URL" }}
 {% endblock %}
 
 

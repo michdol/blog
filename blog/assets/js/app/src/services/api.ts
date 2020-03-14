@@ -1,5 +1,7 @@
 import axios, { AxiosRequestConfig, AxiosError, Method } from 'axios';
 
+import { API_URL } from 'src/config';
+
 
 export default class BaseApi {
   post(url: string, data: any, responseCallback?: any) {
@@ -11,8 +13,7 @@ export default class BaseApi {
     return {
       url: url,
       method: method,
-      // TODO: get this from config
-      baseURL: 'http://api.localhost:8000/',
+      baseURL: API_URL,
       data: data,
       withCredentials: true,
       responseType: 'json',

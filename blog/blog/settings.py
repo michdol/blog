@@ -91,12 +91,15 @@ STATICFILES_FINDERS = [
 
 WSGI_APPLICATION = 'blog.wsgi.application'
 
+SUBDOMAIN_API = 'api'
 # Subdomains
 SUBDOMAIN_URLCONFS = {
     None: '%s.urls.frontend' % SITE_NAME, # no subdomain, e.g. ``example.com``
     'www': '%s.urls.frontend' % SITE_NAME,
-    'api': '%s.urls.api' % SITE_NAME,
+    SUBDOMAIN_API: '%s.urls.api' % SITE_NAME,
 }
+
+API_URL = 'http://%s.localhost:8000/' % SUBDOMAIN_API
 
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases

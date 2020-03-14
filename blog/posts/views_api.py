@@ -24,17 +24,14 @@ class PostContentsDetail(generics.CreateAPIView):
         self.process(request.data)
         return Response(status.HTTP_200_OK)
 
-    def get_post_id(self) -> int:
-        return self.kwargs.get('pk')
-
     def process(self, data: dict):
-        self.delete_contents(data.get("delete", []))
+        post_id = self.kwargs.get('pk')
+        self.delete_contents(post_id, data.get("delete", []))
         self.update_contents(data.get("update", []))
-        id_ref_map = self.create_contents(data.get("create", []))
-        self.fix_ordering(data.get("ordering", {}), id_ref_map)
+        id_ref_map = self.create_contents(post_id, data.get("create", []))
+        self.fix_ordering(post_id, data.get("ordering", {}), id_ref_map)
 
-    def delete_contents(self, ids: list):
-        post_id = self.get_post_id()
+    def delete_contents(self, post_id: int, ids: list):
         PostContent.objects.filter(post_id=post_id, id__in=ids).delete()
 
     def update_contents(self, update_data: List[dict]):
@@ -47,8 +44,7 @@ class PostContentsDetail(generics.CreateAPIView):
             if serializer.is_valid():
                 serializer.save()
 
-    def create_contents(self, create_data: List[dict]) -> dict:
-        post_id = self.get_post_id()
+    def create_contents(self, post_id: int, create_data: List[dict]) -> dict:
         id_ref_map = {}
         for content_data in create_data:
             content_data["post_id"] = post_id
@@ -59,8 +55,7 @@ class PostContentsDetail(generics.CreateAPIView):
                 id_ref_map[new_content.id] = content_data['ref']
         return id_ref_map
 
-    def fix_ordering(self, ordering: Dict[str, int], id_ref_map):
-        post_id = self.get_post_id()
+    def fix_ordering(self, post_id: int, ordering: Dict[str, int], id_ref_map):
         queryset = PostContent.objects.filter(post_id=post_id)
         for content in queryset:
             order = ordering.get(id_ref_map.get(content.id))

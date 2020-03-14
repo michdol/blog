@@ -41,7 +41,7 @@ export class PostContent extends React.Component<TPostContentProps, TState> {
 		this.moveUp = this.moveUp.bind(this);
 		this.moveDown = this.moveDown.bind(this);
 		this.openEdit = this.openEdit.bind(this);
-		this.closeEdit = this.closeEdit.bind(this);
+		this.toggleEdit = this.toggleEdit.bind(this);
 	}
 
 	moveContent(moveUp: boolean) {
@@ -60,16 +60,16 @@ export class PostContent extends React.Component<TPostContentProps, TState> {
 		this.setState({editActive: true});
 	}
 
-	closeEdit() {
-		this.setState({editActive: false});
+	toggleEdit() {
+		this.setState({editActive: !this.state.editActive});
 	}
 
 	render() {
 		let content = this.props.content;
 		return (
 			<div>
-				{ this.state.editActive && <Headline content={content} onSave={this.closeEdit} /> }
-				{ !this.state.editActive && <span onClick={this.openEdit}>{ content.headline }</span> }
+				{ this.state.editActive && <Headline content={content} onSave={this.toggleEdit} /> }
+				{ !this.state.editActive && <span onClick={this.toggleEdit}>{ content.headline }</span> }
 				<a onClick={this.moveUp}>Move Up</a>
 				<span> 〰 </span>
 				<a onClick={this.moveDown}>Move Down</a>
