@@ -2,11 +2,11 @@ import * as React from "react";
 import { AnyAction, bindActionCreators, Dispatch } from 'redux';
 import { connect } from 'react-redux';
 
-import { postContentsToServer } from 'api';
 import { AppState } from "store";
 import { IPostContent } from "store/posts/reducer";
 import { getPost } from 'store/posts/actions';
 import PostContent from "components/PostContent";
+import PostsService from 'src/services/posts';
 
 
 const mapStateToProps = (state: AppState) => ({
@@ -26,11 +26,13 @@ type TEditContentsProps = ReturnType<typeof mapStateToProps> & ReturnType<typeof
 
 class EditContents extends React.Component<TEditContentsProps, {}> {
 	private submitButton: any;
+	private postsService: any;
 
 	constructor(props: TEditContentsProps) {
 		super(props);
+		this.postsService = new PostsService();
 		this.djangoSubmitButtonListener = this.djangoSubmitButtonListener.bind(this);
-		this.post = this.post.bind(this);
+		this.updatePostContents = this.updatePostContents.bind(this);
 		// TODO: search if there is better way to find that element
 		this.submitButton = document.getElementsByName('_save')[0];
 	}
@@ -60,8 +62,8 @@ class EditContents extends React.Component<TEditContentsProps, {}> {
 		})
 	}
 
-	post() {
-		postContentsToServer(this.props.post);
+	updatePostContents() {
+		this.postsService.updatePostContents(this.props.post);
 	}
 
 	render() {
@@ -74,7 +76,7 @@ class EditContents extends React.Component<TEditContentsProps, {}> {
 				<ul>
 					{ this.renderPostContents(post.contents) }
 				</ul>
-				<a onClick={this.post}>Post</a>
+				<a onClick={this.updatePostContents}>Post</a>
 			</div>
 		)
 	}

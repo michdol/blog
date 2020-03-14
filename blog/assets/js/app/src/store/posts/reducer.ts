@@ -8,7 +8,7 @@ import {
 
 export interface IPostContent {
   id?: number;
-  ref?: number;
+  ref?: string;
   headline: string;
   text: string;
   is_hidden: boolean;
