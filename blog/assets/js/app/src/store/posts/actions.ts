@@ -1,4 +1,4 @@
-import { IPost } from './reducer';
+import { IPost, IPostContent } from './reducer';
 import { EReduxActionTypes, IReduxBaseAction } from 'store';
 
 export interface IReduxGetPostAction extends IReduxBaseAction {
@@ -7,7 +7,7 @@ export interface IReduxGetPostAction extends IReduxBaseAction {
 }
 
 export function getPost(): IReduxGetPostAction {
-	const post = JSON.parse(document.getElementById('post_data').textContent);
+	const post: IPost = JSON.parse(document.getElementById('post_data').textContent);
 	return {
 		type: EReduxActionTypes.GET_POST,
 		data: post
@@ -16,15 +16,13 @@ export function getPost(): IReduxGetPostAction {
 
 export interface IReduxSetPostContentHeadline extends IReduxBaseAction {
 	type: EReduxActionTypes.SET_POST_CONTENT_HEADLINE;
-	data: string;
-	id: number;
+	data: IPostContent;
 }
 
-export function setPostContentHeadline(id: number, headline: string): IReduxSetPostContentHeadline {
+export function setPostContentHeadline(content: IPostContent): IReduxSetPostContentHeadline {
 	return {
 		type: EReduxActionTypes.SET_POST_CONTENT_HEADLINE,
-		data: headline,
-		id: id
+		data: content
 	}
 }
 

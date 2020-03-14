@@ -10,3 +10,9 @@ const config: AxiosRequestConfig = {
 };*/
 
 export const apiClient = axios.create();
+
+const handleResponse = (response: any) => {
+	console.log(response);
+}
+
+//apiClient.post('http://api.localhost:8000/posts/1/contents/detail/', {}).then(handleResponse);

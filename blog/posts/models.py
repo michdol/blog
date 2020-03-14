@@ -34,3 +34,4 @@ class PostContent(models.Model):
 	class Meta:
 		verbose_name = 'content'
 		verbose_name_plural = 'contents'
+		ordering = ['order']

@@ -51,7 +51,7 @@ export class PostContent extends React.Component<TPostContentProps, {}> {
 		let content = this.props.content;
 		return (
 			<div>
-				<Headline contentId={content.id} headline={content.headline} />
+				<Headline content={content} />
 				<a onClick={this.moveUp}>Move Up</a>
 				<span> 〰 </span>
 				<a onClick={this.moveDown}>Move Down</a>

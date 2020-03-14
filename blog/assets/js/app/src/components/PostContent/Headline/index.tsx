@@ -5,15 +5,15 @@ import { connect } from 'react-redux';
 import { AppState } from "store";
 import { setPostContentHeadline } from 'store/posts/actions';
 
+import { IPostContent } from 'store/posts/reducer';
+
 
 type Props = {
-	contentId: number;
-	headline: string;
+	content: IPostContent;
 };
 
 const mapStateToProps = (state: AppState, ownProps: Props) => ({
-	contentId: ownProps.contentId,
-	headline: ownProps.headline
+	content: ownProps.content
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) =>
@@ -36,7 +36,7 @@ export class Headline extends React.Component<THeadlineProps, State> {
 		super(props);
 		this.state = {
 			editActive: false,
-			headline: props.headline
+			headline: props.content.headline
 		}
 		this.updateHeadline = this.updateHeadline.bind(this);
 		this.saveChanges = this.saveChanges.bind(this);
@@ -48,7 +48,9 @@ export class Headline extends React.Component<THeadlineProps, State> {
 	}
 
 	saveChanges() {
-		this.props.setPostContentHeadline(this.props.contentId, this.state.headline);
+		let content = this.props.content;
+		content.headline = this.state.headline;
+		this.props.setPostContentHeadline(content);
 		this.setState({editActive: false});
 	}
 
@@ -65,9 +67,8 @@ export class Headline extends React.Component<THeadlineProps, State> {
 				</div>
 			)
 		}
-		const { headline } = this.props;
 		return (
-			<div onClick={this.openEdit}><pre>{ headline }</pre></div>
+			<div onClick={this.openEdit}><pre>{ this.props.content.headline }</pre></div>
 		)
 	}
 }

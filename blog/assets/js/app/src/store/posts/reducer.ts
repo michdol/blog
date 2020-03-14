@@ -7,11 +7,13 @@ import {
 
 
 export interface IPostContent {
-  id: number;
+  id?: number;
+  ref?: number;
   headline: string;
   text: string;
   is_hidden: boolean;
   order: number;
+  changed: boolean;
 }
 
 export interface IPost {
@@ -20,16 +22,30 @@ export interface IPost {
   contents: IPostContent[];
 }
 
+export interface IPayload {
+  create: IPostContent[];
+  update: IPostContent[];
+  delete: number[];
+  ordering: any;
+}
+
 export interface IReduxPostsState {
   post: IPost;
   postLoaded: boolean;
   posts: IPost[];
+  payload: IPayload;
 }
 
 const initialState: IReduxPostsState = {
   post: undefined,
   postLoaded: false,
   posts: [],
+  payload: {
+    create: [],
+    update: [],
+    delete: [],
+    ordering: {}
+  }
 };
 
 type TPostsReducerActions = IReduxGetPostAction | IReduxSetPostContentHeadline | IReduxReorderPostContents;
@@ -39,7 +55,7 @@ export default function(state: IReduxPostsState = initialState, action: TPostsRe
     case EReduxActionTypes.GET_POST:
       return { ...state, post: action.data, postLoaded: true };
     case EReduxActionTypes.SET_POST_CONTENT_HEADLINE:
-      return updatePostContentTextField(state, action);
+      return updatePostContent(state, action);
     case EReduxActionTypes.REORDER_POST_CONTENTS:
       let newContents: IPostContent[] = Array.from(state.post.contents);
       newContents = swapObjectsInArray(newContents, action.id, action.moveUp);
@@ -59,18 +75,15 @@ export default function(state: IReduxPostsState = initialState, action: TPostsRe
   }
 }
 
-function updatePostContentTextField(state: IReduxPostsState, action: IReduxSetPostContentHeadline) {
+function updatePostContent(state: IReduxPostsState, action: IReduxSetPostContentHeadline) {
   // https://redux.js.org/recipes/structuring-reducers/immutable-update-patterns/
   return {
     ...state,
     post: {
       ...state.post,
       contents: state.post.contents.map((content: IPostContent) => {
-        if (content.id === action.id) {
-          return {
-            ...content,
-            headline: action.data
-          }
+        if (content.id === action.data.id) {
+          return createUpdatedContentState(content, action.data);
         }
         return content;
       })
@@ -78,7 +91,16 @@ function updatePostContentTextField(state: IReduxPostsState, action: IReduxSetPo
   }
 }
 
+function createUpdatedContentState(content: IPostContent, data: IPostContent) {
+  let state: any = {...content};
+  state = Object.assign(state, data);
+  state['changed'] = true;
+  return state
+}
+
+
 export function swapObjectsInArray(array: any[], id: number, moveUp: boolean): IPostContent[] {
+  // TODO: this is buggy
   let currentIdx: number = getObjectIdxById(array, id);
   let lastIdx: number = array.length - 1;
   let newIdx: number = getSwapTargetIndex(currentIdx, lastIdx, moveUp);
