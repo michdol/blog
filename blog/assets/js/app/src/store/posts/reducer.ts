@@ -1,8 +1,12 @@
+import { v4 } from 'uuid';
+
 import { EReduxActionTypes } from 'store';
 import {
   IReduxGetPostAction,
   IReduxSetPostContentHeadline,
-  IReduxReorderPostContents
+  IReduxReorderPostContents,
+  IReduxDeletePostContent,
+  IReduxAddPostContent
 } from './actions';
 
 
@@ -25,21 +29,24 @@ export interface IPost {
 export interface IReduxPostsState {
   post: IPost;
   postLoaded: boolean;
-  posts: IPost[];
+  deletedContents: IPostContent[];
 }
 
 const initialState: IReduxPostsState = {
   post: {} as any,
   postLoaded: false,
-  posts: []
+  deletedContents: []
 };
 
 type TPostsReducerActions =
   IReduxGetPostAction |
   IReduxSetPostContentHeadline |
-  IReduxReorderPostContents;
+  IReduxReorderPostContents |
+  IReduxDeletePostContent |
+  IReduxAddPostContent;
 
 export default function(state: IReduxPostsState = initialState, action: TPostsReducerActions) {
+  let contentsCopy: IPostContent[];
   switch (action.type) {
     case EReduxActionTypes.GET_POST:
       return { ...state, post: action.data, postLoaded: true };
@@ -57,6 +64,29 @@ export default function(state: IReduxPostsState = initialState, action: TPostsRe
         post: {
           ...state.post,
           contents: newContents
+        }
+      }
+    case EReduxActionTypes.ADD_POST_CONTENT:
+      contentsCopy = Array.from(state.post.contents);
+      contentsCopy = insertNewContent(contentsCopy, action.index);
+      return {
+        ...state,
+        post: {
+          ...state.post,
+          contents: contentsCopy
+        }
+      }
+    case EReduxActionTypes.DELETE_POST_CONTENT:
+      contentsCopy = Array.from(state.post.contents);
+      contentsCopy = deletePostContent(contentsCopy, action.content);
+      let deletedContentsCopy = Array.from(state.deletedContents);
+      deletedContentsCopy.push(action.content);
+      return {
+        ...state,
+        deletedContents: deletedContentsCopy,
+        post: {
+          ...state.post,
+          contents: contentsCopy
         }
       }
     default:
@@ -130,4 +160,31 @@ export function getObjectIdxById(array: any[], id: number): number {
     }
   } 
   return targetIdx;
+}
+
+function deletePostContent(contents: IPostContent[], target: IPostContent): IPostContent[] {
+  if (target.id === undefined) {
+    return contents.filter((content: IPostContent) => content.ref !== target.ref)
+  }
+  return contents.filter((content: IPostContent) => content.id !== target.id)
+}
+
+function insertNewContent(contents: IPostContent[], index: number): IPostContent[] {
+  let newContent = createEmptyContent();
+  return [
+    ...contents.slice(0, index),
+    newContent,
+    ...contents.slice(index)
+  ]
+}
+
+function createEmptyContent(): IPostContent {
+  return {
+    ref: v4(),
+    headline: "Temporary headline",
+    text: "",
+    order: undefined,
+    is_hidden: false,
+    changed: false
+  }
 }

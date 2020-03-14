@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { AppState } from "store";
 import { IPostContent } from "store/posts/reducer";
 import Headline from "./Headline";
-import { reorderPostContents } from 'store/posts/actions';
+import { reorderPostContents, deletePostContent } from 'store/posts/actions';
 
 
 type TOwnProps = {
@@ -20,7 +20,8 @@ const mapStateToProps = (state: AppState, ownProps: TOwnProps) => ({
 const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) =>
 	bindActionCreators(
 	{
-		reorderPostContents
+		reorderPostContents,
+		deletePostContent
 	},
 	dispatch
 );
@@ -42,6 +43,7 @@ export class PostContent extends React.Component<TPostContentProps, TState> {
 		this.moveDown = this.moveDown.bind(this);
 		this.openEdit = this.openEdit.bind(this);
 		this.toggleEdit = this.toggleEdit.bind(this);
+		this.deleteContent = this.deleteContent.bind(this);
 	}
 
 	moveContent(moveUp: boolean) {
@@ -64,6 +66,10 @@ export class PostContent extends React.Component<TPostContentProps, TState> {
 		this.setState({editActive: !this.state.editActive});
 	}
 
+	deleteContent() {
+		this.props.deletePostContent(this.props.content);
+	}
+
 	render() {
 		let content = this.props.content;
 		return (
@@ -73,6 +79,7 @@ export class PostContent extends React.Component<TPostContentProps, TState> {
 				<a onClick={this.moveUp}>Move Up</a>
 				<span> 〰 </span>
 				<a onClick={this.moveDown}>Move Down</a>
+				<a onClick={this.deleteContent}>X</a>
 			</div>
 		)
 	}

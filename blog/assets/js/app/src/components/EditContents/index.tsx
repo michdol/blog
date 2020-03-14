@@ -6,12 +6,14 @@ import { AppState } from "store";
 import { IPostContent } from "store/posts/reducer";
 import { getPost } from 'store/posts/actions';
 import PostContent from "components/PostContent";
+import AddNewPostContentButton from "components/AddNewPostContentButton";
 import PostsService from 'src/services/posts';
 
 
 const mapStateToProps = (state: AppState) => ({
 	post: state.posts.post,
 	postLoaded: state.posts.postLoaded,
+	deletedContents: state.posts.deletedContents
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) =>
@@ -58,12 +60,13 @@ class EditContents extends React.Component<TEditContentsProps, {}> {
 		return contents.map((content, idx) => {
 			return <li key={idx}>
 				<PostContent idx={idx} />
+				<AddNewPostContentButton idx={idx + 1} />
 			</li>
 		})
 	}
 
 	updatePostContents() {
-		this.postsService.updatePostContents(this.props.post);
+		this.postsService.updatePostContents(this.props.post, this.props.deletedContents);
 	}
 
 	render() {

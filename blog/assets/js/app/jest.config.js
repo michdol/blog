@@ -14,9 +14,9 @@ module.exports = {
   "moduleDirectories": ['node_modules', 'src'],
   "moduleNameMapper": {
     "src": "<rootDir>/src/",
-    "api": "<rootDir>/src/api/",
-    "store": "<rootDir>/src/store/",
     "components": "<rootDir>/src/components/",
+    "services": "<rootDir>/src/services/",
+    "store": "<rootDir>/src/store/"
   },
   "moduleFileExtensions": ["js", "jsx", "ts", "tsx", "json", "node"],
   globals: {

@@ -1,4 +1,3 @@
-import { v4 } from 'uuid';
 
 import BaseApi from 'src/services/api';
 import { IPost, IPostContent } from 'store/posts/reducer';
@@ -16,20 +15,20 @@ export default class PostsService extends BaseApi {
     return `posts/${ id }/contents/detail/`
   }
 
-  updatePostContents(post: IPost) {
+  updatePostContents(post: IPost, deletedContents: IPostContent[]) {
     let url: string = this.contents_detail(post.id);
-    let payload: IPostContentsPayload = this.createPostContentsPayload(post.contents);
+    let payload: IPostContentsPayload = this.createPostContentsPayload(post.contents, deletedContents);
     this.post(url, payload, this.responseCallback)
   }
 
-  createPostContentsPayload(contents: IPostContent[]) {
+  createPostContentsPayload(contents: IPostContent[], deletedContents: IPostContent[]) {
     // TODO: add deleting contents
     let newContents: IPostContent[] = [];
     let updatedContents: IPostContent[] = [];
     let ordering = {} as any;
+    let deletedContentIds = deletedContents.map((content) => content.id);
     for (let [key, content] of contents.entries()) {
       if (content.id === undefined) {
-        content.ref = v4();
         newContents.push(content);
       } else if (content.id && content.changed === true) {
         updatedContents.push(content);
@@ -40,7 +39,7 @@ export default class PostsService extends BaseApi {
     return {
       "create": newContents,
       "update": updatedContents,
-      "delete": [] as any,
+      "delete": deletedContentIds,
       "ordering": ordering,
     }
   }

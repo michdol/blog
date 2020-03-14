@@ -39,3 +39,27 @@ export function reorderPostContents(id: number, moveUp: boolean): IReduxReorderP
 		moveUp: moveUp
 	}
 }
+
+export interface IReduxDeletePostContent extends IReduxBaseAction {
+	type: EReduxActionTypes.DELETE_POST_CONTENT;
+	content: IPostContent;
+}
+
+export function deletePostContent(content: IPostContent): IReduxDeletePostContent {
+	return {
+		type: EReduxActionTypes.DELETE_POST_CONTENT,
+		content: content
+	}
+}
+
+export interface IReduxAddPostContent extends IReduxBaseAction {
+	type: EReduxActionTypes.ADD_POST_CONTENT;
+	index: number;
+}
+
+export function addPostContent(index: number): IReduxAddPostContent {
+	return {
+		type: EReduxActionTypes.ADD_POST_CONTENT,
+		index: index
+	}
+}
