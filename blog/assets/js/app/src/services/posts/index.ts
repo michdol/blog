@@ -22,7 +22,6 @@ export default class PostsService extends BaseApi {
   }
 
   createPostContentsPayload(contents: IPostContent[], deletedContents: IPostContent[]) {
-    // TODO: add deleting contents
     let newContents: IPostContent[] = [];
     let updatedContents: IPostContent[] = [];
     let ordering = {} as any;

@@ -1,4 +1,4 @@
-import { IPost, IPostContent } from './reducer';
+import { IPost, IPostContent, INewPostContentData } from './reducer';
 import { EReduxActionTypes, IReduxBaseAction } from 'store';
 
 export interface IReduxGetPostAction extends IReduxBaseAction {
@@ -54,12 +54,12 @@ export function deletePostContent(content: IPostContent): IReduxDeletePostConten
 
 export interface IReduxAddPostContent extends IReduxBaseAction {
 	type: EReduxActionTypes.ADD_POST_CONTENT;
-	index: number;
+	data: INewPostContentData;
 }
 
-export function addPostContent(index: number): IReduxAddPostContent {
+export function addPostContent(data: INewPostContentData): IReduxAddPostContent {
 	return {
 		type: EReduxActionTypes.ADD_POST_CONTENT,
-		index: index
+		data: data
 	}
 }

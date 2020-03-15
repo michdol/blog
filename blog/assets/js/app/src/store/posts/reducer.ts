@@ -1,5 +1,6 @@
 import { v4 } from 'uuid';
 
+import { EPostContentTypes } from 'src/constants';
 import { EReduxActionTypes } from 'store';
 import {
   IReduxGetPostAction,
@@ -23,6 +24,13 @@ export interface IPostContent {
   created?: Date;
   updated?: Date;
   changed: boolean;
+}
+
+export interface INewPostContentData {
+  headline?: string;
+  text?: string;
+  order: number;
+  type: number;
 }
 
 export interface IPost {
@@ -69,13 +77,15 @@ export default function(state: IReduxPostsState = initialState, action: TPostsRe
       return {...state, post: {...state.post, contents: newContents } }
     case EReduxActionTypes.ADD_POST_CONTENT:
       contentsCopy = Array.from(state.post.contents);
-      contentsCopy = insertNewContent(contentsCopy, action.index);
+      contentsCopy = insertNewContent(contentsCopy, action.data);
       return {...state, post: {...state.post, contents: contentsCopy } }
     case EReduxActionTypes.DELETE_POST_CONTENT:
       contentsCopy = Array.from(state.post.contents);
       contentsCopy = deletePostContent(contentsCopy, action.content);
       let deletedContentsCopy = Array.from(state.deletedContents);
-      deletedContentsCopy.push(action.content);
+      if (action.content.id !== undefined) {
+        deletedContentsCopy.push(action.content);
+      }
       return {...state,
         deletedContents: deletedContentsCopy,
         post: {
@@ -104,7 +114,6 @@ function updatePostContent(contents: IPostContent[], targetContent: IPostContent
 }
 
 export function swapObjectsInArray(array: any[], id: number, moveUp: boolean): IPostContent[] {
-  // TODO: this is buggy
   let currentIdx: number = getObjectIdxById(array, id);
   let lastIdx: number = array.length - 1;
   let newIdx: number = getSwapTargetIndex(currentIdx, lastIdx, moveUp);
@@ -124,7 +133,6 @@ export function getSwapTargetIndex(initialIdx: number, lastIdx: number, moveUp: 
   return targetIdx
 }
 
-// TODO: test this and move unrelated functions to some kind of utils.
 export function getObjectIdxById(array: any[], id: number): number {
   let targetIdx: number = -1;
   for (let [key, obj] of array.entries()) {
@@ -143,18 +151,18 @@ function deletePostContent(contents: IPostContent[], target: IPostContent): IPos
   return contents.filter((content: IPostContent) => content.id !== target.id)
 }
 
-function insertNewContent(contents: IPostContent[], index: number): IPostContent[] {
-  let newContent = createEmptyContent();
-  if (index < 0) {
+function insertNewContent(contents: IPostContent[], data: INewPostContentData): IPostContent[] {
+  let newContent = createNewPostContent(data);
+  if (data.order < 0) {
     return [
       ...contents,
       newContent
     ]
   }
   return [
-    ...contents.slice(0, index),
+    ...contents.slice(0, data.order),
     newContent,
-    ...contents.slice(index)
+    ...contents.slice(data.order)
   ]
 }
 
@@ -169,4 +177,15 @@ function createEmptyContent(): IPostContent {
     is_hidden: false,
     changed: false
   }
+}
+
+function createNewPostContent(data: INewPostContentData): IPostContent {
+  return Object.assign({
+      ref: v4(),
+      extra: {},
+      is_hidden: false,
+      changed: false
+    },
+    data
+  )
 }

@@ -6,7 +6,7 @@ import { AppState } from "store";
 import { IPostContent } from "store/posts/reducer";
 import { getPost } from 'store/posts/actions';
 import PostContent from "components/PostContent";
-import AddNewPostContentButton from "components/AddNewPostContentButton";
+import AddNewPostContent from "components/AddNewPostContent";
 import PostsService from 'src/services/posts';
 
 
@@ -36,7 +36,6 @@ class EditContents extends React.Component<TEditContentsProps, {}> {
 		this.postsService = new PostsService();
 		this.djangoSubmitButtonListener = this.djangoSubmitButtonListener.bind(this);
 		this.updatePostContents = this.updatePostContents.bind(this);
-		// TODO: search if there is better way to find that element
 		this.submitButton = document.getElementsByName('_save')[0];
 	}
 
@@ -65,7 +64,7 @@ class EditContents extends React.Component<TEditContentsProps, {}> {
 		return contents.map((content, idx) => {
 			return <li key={idx}>
 				<PostContent idx={idx} />
-				<AddNewPostContentButton idx={idx + 1} />
+				<AddNewPostContent idx={idx + 1} />
 			</li>
 		})
 	}
@@ -86,7 +85,7 @@ class EditContents extends React.Component<TEditContentsProps, {}> {
 				<ul>
 					{ this.renderPostContents(post.contents) }
 				</ul>
-				<AddNewPostContentButton idx={-1} />
+				<AddNewPostContent idx={-1} />
 				<a onClick={this.updatePostContents}>Post</a>
 			</div>
 		)

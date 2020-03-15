@@ -2,7 +2,7 @@ import * as React from "react";
 import { AnyAction, bindActionCreators, Dispatch } from 'redux';
 import { connect } from 'react-redux';
 
-import { EPostContentTypes, POST_CONTENT_TYPE_CHOICES } from "src/config";
+import { EPostContentTypes, POST_CONTENT_TYPE_CHOICES } from "src/constants";
 import { AppState } from "store";
 import { toggleEditActive } from 'store/ui/actions';
 import { reorderPostContents, deletePostContent } from 'store/posts/actions';

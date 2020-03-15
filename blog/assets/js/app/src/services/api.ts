@@ -1,6 +1,6 @@
 import axios, { AxiosRequestConfig, AxiosError, Method } from 'axios';
 
-import { API_URL } from 'src/config';
+import { API_URL } from 'src/constants';
 
 
 export default class BaseApi {
