@@ -8,7 +8,10 @@ class PostContentSerializer(serializers.ModelSerializer):
 
 	class Meta:
 		model = PostContent
-		fields = ('id', 'post_id', 'headline', 'text', 'is_hidden', 'order')
+		fields = (
+			'id', 'post_id', 'headline', 'text', 'is_hidden', 'order', 'type',
+			'extra', 'created', 'updated'
+		)
 
 	def create(self, validated_data) -> PostContent:
 		return PostContent.objects.create(**validated_data)

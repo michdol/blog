@@ -2,12 +2,13 @@ import * as React from "react";
 import { AnyAction, bindActionCreators, Dispatch } from 'redux';
 import { connect } from 'react-redux';
 
+import { EPostContentTypes, POST_CONTENT_TYPE_CHOICES } from "src/config";
 import { AppState } from "store";
+import { toggleEditActive } from 'store/ui/actions';
+import { reorderPostContents, deletePostContent } from 'store/posts/actions';
 import { IPostContent } from "store/posts/reducer";
 import Headline from "./Headline";
 import Text from "./Text";
-import { reorderPostContents, deletePostContent } from 'store/posts/actions';
-import { toggleEditActive } from 'store/ui/actions';
 
 
 type TOwnProps = {
@@ -102,17 +103,26 @@ export class PostContent extends React.Component<TPostContentProps, TState> {
 		)	
 	}
 
-	getPostContentRenderFunc() {
-		if (1 !== 1) {
-			return this.renderHeadline();
+	renderPostContentByType() {
+		switch(this.props.content.type) {
+			case EPostContentTypes.POST_CONTENT_TYPE_HEADLINE:
+				return this.renderHeadline();
+			case EPostContentTypes.POST_CONTENT_TYPE_TEXT:
+				return this.renderText();
+			default:
+				return <div className="unknown-content-type">UNKOWN_CONTENT_TYPE</div>
 		}
-		return this.renderText();
 	}
 
 	render() {
 		return (
 			<div>
-				{ this.getPostContentRenderFunc() }
+				<div>
+					<label>{ POST_CONTENT_TYPE_CHOICES[this.props.content.type] }</label>
+				</div>
+				<div>
+					{ this.renderPostContentByType() }
+				</div>
 				<a onClick={this.moveUp}>Move Up</a>
 				<span> 〰 </span>
 				<a onClick={this.moveDown}>Move Down</a>

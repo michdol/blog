@@ -13,10 +13,15 @@ import {
 export interface IPostContent {
   id?: number;
   ref?: string;
-  headline: string;
-  text: string;
+  headline?: string;
+  text?: string;
+  image_url?: string;
+  type: number;
   is_hidden: boolean;
   order: number;
+  extra: any;
+  created?: Date;
+  updated?: Date;
   changed: boolean;
 }
 
@@ -158,6 +163,8 @@ function createEmptyContent(): IPostContent {
     ref: v4(),
     headline: "Temporary headline",
     text: "",
+    type: 0,
+    extra: {},
     order: undefined,
     is_hidden: false,
     changed: false
