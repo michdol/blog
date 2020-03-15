@@ -6,6 +6,7 @@ import { AppState } from "store";
 import { IPostContent } from "store/posts/reducer";
 import Headline from "./Headline";
 import { reorderPostContents, deletePostContent } from 'store/posts/actions';
+import { toggleEditActive } from 'store/ui/actions';
 
 
 type TOwnProps = {
@@ -15,13 +16,15 @@ type TOwnProps = {
 const mapStateToProps = (state: AppState, ownProps: TOwnProps) => ({
 	content: state.posts.post.contents[ownProps.idx],
 	idx: ownProps.idx,
+	editActive: state.ui.editActive
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) =>
 	bindActionCreators(
 	{
 		reorderPostContents,
-		deletePostContent
+		deletePostContent,
+		toggleEditActive
 	},
 	dispatch
 );
@@ -42,12 +45,14 @@ export class PostContent extends React.Component<TPostContentProps, TState> {
 		this.moveUp = this.moveUp.bind(this);
 		this.moveDown = this.moveDown.bind(this);
 		this.openEdit = this.openEdit.bind(this);
-		this.toggleEdit = this.toggleEdit.bind(this);
+		this.closeEdit = this.closeEdit.bind(this);
 		this.deleteContent = this.deleteContent.bind(this);
 	}
 
 	moveContent(moveUp: boolean) {
-		this.props.reorderPostContents(this.props.content.id, moveUp);
+		if (!this.props.editActive) {
+			this.props.reorderPostContents(this.props.content.id, moveUp);
+		}
 	}
 
 	moveUp() {
@@ -59,23 +64,29 @@ export class PostContent extends React.Component<TPostContentProps, TState> {
 	}
 
 	openEdit() {
-		this.setState({editActive: true});
+		if (!this.props.editActive) {
+			this.setState({editActive: true});
+			this.props.toggleEditActive();
+		}
 	}
 
-	toggleEdit() {
-		this.setState({editActive: !this.state.editActive});
+	closeEdit() {
+		this.setState({editActive: false});
+		this.props.toggleEditActive();
 	}
 
 	deleteContent() {
-		this.props.deletePostContent(this.props.content);
+		if (!this.props.editActive) {
+			this.props.deletePostContent(this.props.content);
+		}
 	}
 
 	render() {
 		let content = this.props.content;
 		return (
 			<div>
-				{ this.state.editActive && <Headline content={content} onSave={this.toggleEdit} /> }
-				{ !this.state.editActive && <span onClick={this.toggleEdit}>{ content.headline }</span> }
+				{ this.state.editActive && <Headline content={content} onSave={this.closeEdit} /> }
+				{ !this.state.editActive && <span onClick={this.openEdit}>{ content.headline }</span> }
 				<a onClick={this.moveUp}>Move Up</a>
 				<span> 〰 </span>
 				<a onClick={this.moveDown}>Move Down</a>

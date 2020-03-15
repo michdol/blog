@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 
 import { AppState } from "store";
 import { setPostContentHeadline } from 'store/posts/actions';
-
 import { IPostContent } from 'store/posts/reducer';
 
 

@@ -13,7 +13,8 @@ type TOwnProps = {
 
 const mapStateToProps = (state: AppState, ownProps: TOwnProps) => ({
 	post: state.posts.post,
-	idx: ownProps.idx
+	idx: ownProps.idx,
+	editActive: state.ui.editActive
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) =>
@@ -33,7 +34,9 @@ class AddNewPostContentButton extends React.Component<TAddNewPostContentButtonPr
 	}
 
 	addNewContent() {
-		this.props.addPostContent(this.props.idx);
+		if (!this.props.editActive) {
+			this.props.addPostContent(this.props.idx);
+		}
 	}
 
 	render() {

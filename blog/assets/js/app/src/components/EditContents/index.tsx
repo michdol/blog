@@ -13,7 +13,8 @@ import PostsService from 'src/services/posts';
 const mapStateToProps = (state: AppState) => ({
 	post: state.posts.post,
 	postLoaded: state.posts.postLoaded,
-	deletedContents: state.posts.deletedContents
+	deletedContents: state.posts.deletedContents,
+	editActive: state.ui.editActive
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) =>
@@ -66,7 +67,9 @@ class EditContents extends React.Component<TEditContentsProps, {}> {
 	}
 
 	updatePostContents() {
-		this.postsService.updatePostContents(this.props.post, this.props.deletedContents);
+		if (!this.props.editActive) {
+			this.postsService.updatePostContents(this.props.post, this.props.deletedContents);
+		}
 	}
 
 	render() {
