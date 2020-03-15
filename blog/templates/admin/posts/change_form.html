@@ -2,14 +2,6 @@
 {% load static sass_tags %}
 {% load render_bundle from webpack_loader %}
 
-
-{% block extrastyle %}
-	{{ block.super }}
-	<link href="{% sass_src 'css/admin_change_form.scss' %}" rel="stylesheet" type="text/css" />
-{% endblock %}
-
-
-		<link href="{% sass_src 'css/base.scss' %}" rel="stylesheet" type="text/css" />
 {% block field_sets %}
 	{{ block.super }}
 	{% include "admin/posts/contents_fieldset.html" %}
@@ -25,6 +17,11 @@
 
 {% block admin_change_form_document_ready %}
 {{ block.super }}
+<!-- Bootstrap Start -->
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+<!-- Bootstrap End -->
 <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
 <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
 {% render_bundle 'main' %}

@@ -81,7 +81,7 @@ class EditContents extends React.Component<TEditContentsProps, {}> {
 			return null
 		}
 		return (
-			<div>
+			<div className="container">
 				<ul>
 					{ this.renderPostContents(post.contents) }
 				</ul>

@@ -86,20 +86,24 @@ export class PostContent extends React.Component<TPostContentProps, TState> {
 	renderHeadline() {
 		const content = this.props.content;
 		return (
-			<React.Fragment>
+			<div className="content-headline text-center d-flex align-items-center">
 				{ this.state.editActive && <Headline content={content} onSave={this.closeEdit} /> }
-				{ !this.state.editActive && <span onClick={this.openEdit}>{ content.headline }</span> }
-			</React.Fragment>
+				{ !this.state.editActive &&
+					<span className="font-weight-bold" onClick={this.openEdit}>
+						{ content.headline }
+					</span>
+				}
+			</div>
 		)
 	}
 
 	renderText() {
 		const content = this.props.content;
 		return (
-			<React.Fragment>
+			<div className="container content-text">
 				{ this.state.editActive && <Text content={content} onSave={this.closeEdit} /> }
 				{ !this.state.editActive && <span onClick={this.openEdit}>{ content.text }</span> }
-			</React.Fragment>
+			</div>
 		)	
 	}
 
@@ -115,18 +119,24 @@ export class PostContent extends React.Component<TPostContentProps, TState> {
 	}
 
 	render() {
+		const content = this.props.content;
 		return (
-			<div>
-				<div>
-					<label>{ POST_CONTENT_TYPE_CHOICES[this.props.content.type] }</label>
+			<div className="container post-content">
+				<div className="col-10">
+					<div className="row">
+						<h1>{ POST_CONTENT_TYPE_CHOICES[this.props.content.type] }</h1>
+						{ content.id === undefined && <span className="badge badge-primary">New</span>}
+					</div>
+					<div className="row content-content">
+						{ this.renderPostContentByType() }
+					</div>
+					<div className="row content-buttons">
+						<a onClick={this.moveUp}>Move Up</a>
+						<span> 〰 </span>
+						<a onClick={this.moveDown}>Move Down</a>
+						<a onClick={this.deleteContent}>X</a>
+					</div>
 				</div>
-				<div>
-					{ this.renderPostContentByType() }
-				</div>
-				<a onClick={this.moveUp}>Move Up</a>
-				<span> 〰 </span>
-				<a onClick={this.moveDown}>Move Down</a>
-				<a onClick={this.deleteContent}>X</a>
 			</div>
 		)
 	}

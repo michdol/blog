@@ -54,10 +54,14 @@ export class Headline extends React.Component<THeadlineProps, State> {
 
 	render() {
 		return (
-			<div>
-				<input type="text" value={this.state.headline} onChange={this.updateHeadline} />
-				<button onClick={this.saveChanges}>Save</button>
-			</div>
+			<React.Fragment>
+				<div className="row">
+					<input type="text" value={this.state.headline} onChange={this.updateHeadline} />
+				</div>
+				<div className="row">
+					<button onClick={this.saveChanges}>Save</button>
+				</div>
+			</React.Fragment>
 		)
 	}
 }
