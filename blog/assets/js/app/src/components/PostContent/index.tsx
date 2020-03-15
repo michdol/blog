@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { AppState } from "store";
 import { IPostContent } from "store/posts/reducer";
 import Headline from "./Headline";
+import Text from "./Text";
 import { reorderPostContents, deletePostContent } from 'store/posts/actions';
 import { toggleEditActive } from 'store/ui/actions';
 
@@ -81,12 +82,37 @@ export class PostContent extends React.Component<TPostContentProps, TState> {
 		}
 	}
 
-	render() {
-		let content = this.props.content;
+	renderHeadline() {
+		const content = this.props.content;
 		return (
-			<div>
+			<React.Fragment>
 				{ this.state.editActive && <Headline content={content} onSave={this.closeEdit} /> }
 				{ !this.state.editActive && <span onClick={this.openEdit}>{ content.headline }</span> }
+			</React.Fragment>
+		)
+	}
+
+	renderText() {
+		const content = this.props.content;
+		return (
+			<React.Fragment>
+				{ this.state.editActive && <Text content={content} onSave={this.closeEdit} /> }
+				{ !this.state.editActive && <span onClick={this.openEdit}>{ content.text }</span> }
+			</React.Fragment>
+		)	
+	}
+
+	getPostContentRenderFunc() {
+		if (1 !== 1) {
+			return this.renderHeadline();
+		}
+		return this.renderText();
+	}
+
+	render() {
+		return (
+			<div>
+				{ this.getPostContentRenderFunc() }
 				<a onClick={this.moveUp}>Move Up</a>
 				<span> 〰 </span>
 				<a onClick={this.moveDown}>Move Down</a>

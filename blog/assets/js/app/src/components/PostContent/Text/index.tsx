@@ -26,28 +26,28 @@ const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) =>
 );
 
 type State = {
-	headline: string;
+	text: string;
 }
 
-type THeadlineProps = ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchToProps>;
+type TTextProps = ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchToProps>;
 
-export class Headline extends React.Component<THeadlineProps, State> {
+export class Text extends React.Component<TTextProps, State> {
 	constructor(props: any) {
 		super(props);
 		this.state = {
-			headline: props.content.headline
+			text: props.content.text
 		}
-		this.updateHeadline = this.updateHeadline.bind(this);
+		this.updateText = this.updateText.bind(this);
 		this.saveChanges = this.saveChanges.bind(this);
 	}
 
-	updateHeadline(e: any) {
-		this.setState({headline: e.target.value})
+	updateText(e: any) {
+		this.setState({text: e.target.value})
 	}
 
 	saveChanges() {
 		let content = this.props.content;
-		content.headline = this.state.headline;
+		content.text = this.state.text;
 		this.props.setPostContentHeadline(content);
 		this.props.onSave();
 	}
@@ -55,11 +55,12 @@ export class Headline extends React.Component<THeadlineProps, State> {
 	render() {
 		return (
 			<div>
-				<input type="text" value={this.state.headline} onChange={this.updateHeadline} />
+				<textarea value={this.state.text} onChange={this.updateText} />
 				<button onClick={this.saveChanges}>Save</button>
 			</div>
 		)
 	}
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Headline);
+
+export default connect(mapStateToProps, mapDispatchToProps)(Text);

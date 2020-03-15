@@ -140,6 +140,12 @@ function deletePostContent(contents: IPostContent[], target: IPostContent): IPos
 
 function insertNewContent(contents: IPostContent[], index: number): IPostContent[] {
   let newContent = createEmptyContent();
+  if (index < 0) {
+    return [
+      ...contents,
+      newContent
+    ]
+  }
   return [
     ...contents.slice(0, index),
     newContent,

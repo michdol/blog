@@ -42,11 +42,15 @@ class EditContents extends React.Component<TEditContentsProps, {}> {
 
 	componentDidMount() {
 		this.props.getPost();
-		this.submitButton.addEventListener("click", this.djangoSubmitButtonListener);
+		if (this.submitButton !== undefined) {
+			this.submitButton.addEventListener("click", this.djangoSubmitButtonListener);
+		}
 	}
 
 	componentWillUnmount() {
-		this.submitButton.removeEventListener("click", this.djangoSubmitButtonListener);
+		if (this.submitButton !== undefined) {
+			this.submitButton.removeEventListener("click", this.djangoSubmitButtonListener);
+		}
 	}
 
 	djangoSubmitButtonListener(e: any) {
@@ -82,6 +86,7 @@ class EditContents extends React.Component<TEditContentsProps, {}> {
 				<ul>
 					{ this.renderPostContents(post.contents) }
 				</ul>
+				<AddNewPostContentButton idx={-1} />
 				<a onClick={this.updatePostContents}>Post</a>
 			</div>
 		)
