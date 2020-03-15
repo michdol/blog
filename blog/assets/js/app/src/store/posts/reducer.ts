@@ -51,7 +51,9 @@ export default function(state: IReduxPostsState = initialState, action: TPostsRe
     case EReduxActionTypes.GET_POST:
       return { ...state, post: action.data, postLoaded: true };
     case EReduxActionTypes.SET_POST_CONTENT_HEADLINE:
-      return updatePostContent(state, action);
+      contentsCopy = Array.from(state.post.contents);
+      let updatedContents: IPostContent[] = updatePostContent(contentsCopy, action.data);
+      return { ...state, post: {...state.post, contents: updatedContents } }
     case EReduxActionTypes.REORDER_POST_CONTENTS:
       let newContents: IPostContent[] = Array.from(state.post.contents);
       newContents = swapObjectsInArray(newContents, action.id, action.moveUp);
@@ -59,30 +61,17 @@ export default function(state: IReduxPostsState = initialState, action: TPostsRe
         // Do nothing
         return { ...state }
       }
-      return {
-        ...state,
-        post: {
-          ...state.post,
-          contents: newContents
-        }
-      }
+      return {...state, post: {...state.post, contents: newContents } }
     case EReduxActionTypes.ADD_POST_CONTENT:
       contentsCopy = Array.from(state.post.contents);
       contentsCopy = insertNewContent(contentsCopy, action.index);
-      return {
-        ...state,
-        post: {
-          ...state.post,
-          contents: contentsCopy
-        }
-      }
+      return {...state, post: {...state.post, contents: contentsCopy } }
     case EReduxActionTypes.DELETE_POST_CONTENT:
       contentsCopy = Array.from(state.post.contents);
       contentsCopy = deletePostContent(contentsCopy, action.content);
       let deletedContentsCopy = Array.from(state.deletedContents);
       deletedContentsCopy.push(action.content);
-      return {
-        ...state,
+      return {...state,
         deletedContents: deletedContentsCopy,
         post: {
           ...state.post,
@@ -94,29 +83,20 @@ export default function(state: IReduxPostsState = initialState, action: TPostsRe
   }
 }
 
-function updatePostContent(state: IReduxPostsState, action: IReduxSetPostContentHeadline) {
+function updatePostContent(contents: IPostContent[], targetContent: IPostContent): IPostContent[] {
   // https://redux.js.org/recipes/structuring-reducers/immutable-update-patterns/
-  return {
-    ...state,
-    post: {
-      ...state.post,
-      contents: state.post.contents.map((content: IPostContent) => {
-        if (content.id === action.data.id) {
-          return createUpdatedContentState(content, action.data);
-        }
-        return content;
-      })
+  return contents.map((content) => {
+    if (content.id !== targetContent.id) {
+      return content
     }
-  }
+    // This is mutating the state
+    return {
+      ...content,
+      ...targetContent,
+      changed: true
+    }
+  }) 
 }
-
-function createUpdatedContentState(content: IPostContent, data: IPostContent) {
-  let state: any = {...content};
-  state = Object.assign(state, data);
-  state['changed'] = true;
-  return state
-}
-
 
 export function swapObjectsInArray(array: any[], id: number, moveUp: boolean): IPostContent[] {
   // TODO: this is buggy
@@ -127,17 +107,6 @@ export function swapObjectsInArray(array: any[], id: number, moveUp: boolean): I
     [array[currentIdx], array[newIdx]] = [array[newIdx], array[currentIdx]];
   }
   return array;
-  /* I don't fucking know, it's working now
-  let topContent = moveUp ? array[currentIdx] : array[newIdx];
-  let bottomContent = moveUp ? array[newIdx] : array[currentIdx];
-  console.log(topContent, bottomContent);
-  let sliceIdx = currentIdx < newIdx ? currentIdx : newIdx;
-  return [
-    ...array.slice(0, sliceIdx),
-    topContent,
-    bottomContent,
-    ...array.slice(sliceIdx + 2)
-  ]*/
 }
 
 export function getSwapTargetIndex(initialIdx: number, lastIdx: number, moveUp: boolean): number {
