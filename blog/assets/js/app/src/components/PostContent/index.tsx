@@ -7,12 +7,17 @@ import { AppState } from "store";
 import { toggleEditActive } from 'store/ui/actions';
 import { reorderPostContents, deletePostContent } from 'store/posts/actions';
 import { IPostContent } from "store/posts/reducer";
-import Headline from "./Headline";
+import HeadlineDisplay from "./HeadlineDisplay";
+import HeadlineEdit from "./HeadlineEdit";
 import Text from "./Text";
 
 
 type TOwnProps = {
 	idx: number;
+};
+
+type TOwnState = {
+	editActive: boolean;
 };
 
 const mapStateToProps = (state: AppState, ownProps: TOwnProps) => ({
@@ -31,13 +36,9 @@ const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) =>
 	dispatch
 );
 
-type TState = {
-	editActive: boolean;
-}
-
 type TPostContentProps = ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchToProps>;
 
-export class PostContent extends React.Component<TPostContentProps, TState> {
+export class PostContent extends React.Component<TPostContentProps, TOwnState> {
 	constructor(props: any) {
 		super(props);
 		this.state = {
@@ -85,16 +86,10 @@ export class PostContent extends React.Component<TPostContentProps, TState> {
 
 	renderHeadline() {
 		const content = this.props.content;
-		return (
-			<div className="content-headline text-center d-flex align-items-center">
-				{ this.state.editActive && <Headline content={content} onSave={this.closeEdit} /> }
-				{ !this.state.editActive &&
-					<span className="font-weight-bold" onClick={this.openEdit}>
-						{ content.headline }
-					</span>
-				}
-			</div>
-		)
+		if (this.state.editActive) {
+			return <HeadlineEdit content={content} onSave={this.closeEdit} /> 
+		}
+		return <HeadlineDisplay headline={content.headline} openEdit={this.openEdit} />
 	}
 
 	renderText() {
@@ -123,18 +118,19 @@ export class PostContent extends React.Component<TPostContentProps, TState> {
 		return (
 			<div className="container post-content">
 				<div className="col-10">
-					<div className="row">
-						<h1>{ POST_CONTENT_TYPE_CHOICES[this.props.content.type] }</h1>
-						{ content.id === undefined && <span className="badge badge-primary">New</span>}
-					</div>
-					<div className="row content-content">
+					<div className="row rendered-content">
 						{ this.renderPostContentByType() }
 					</div>
-					<div className="row content-buttons">
-						<a onClick={this.moveUp}>Move Up</a>
-						<span> 〰 </span>
-						<a onClick={this.moveDown}>Move Down</a>
-						<a onClick={this.deleteContent}>X</a>
+					<div className="row content-buttons pt-3 pb-3">
+						<div className="col-8">
+							<div className="row">
+								<a className="btn btn-outline-primary mr-2" onClick={this.moveUp}>Move Up</a>
+								<a className="btn btn-outline-primary" onClick={this.moveDown}>Move Down</a>
+							</div>
+						</div>
+						<div className="col-4">
+							<a className="btn btn-danger text-white float-right" onClick={this.deleteContent}>DELETE</a>
+						</div>
 					</div>
 				</div>
 			</div>

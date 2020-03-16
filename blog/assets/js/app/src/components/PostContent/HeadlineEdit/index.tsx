@@ -29,9 +29,9 @@ type State = {
 	headline: string;
 }
 
-type THeadlineProps = ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchToProps>;
+type THeadlineEditProps = ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchToProps>;
 
-export class Headline extends React.Component<THeadlineProps, State> {
+export class HeadlineEdit extends React.Component<THeadlineEditProps, State> {
 	constructor(props: any) {
 		super(props);
 		this.state = {
@@ -54,16 +54,16 @@ export class Headline extends React.Component<THeadlineProps, State> {
 
 	render() {
 		return (
-			<React.Fragment>
-				<div className="row">
-					<input type="text" value={this.state.headline} onChange={this.updateHeadline} />
+			<div className="content-headline text-center d-flex align-items-center">
+				<div className="col-10">
+					<input className="w-100" type="text" value={this.state.headline} onChange={this.updateHeadline} />
 				</div>
-				<div className="row">
-					<button onClick={this.saveChanges}>Save</button>
+				<div className="col-2">
+					<button className="btn btn-primary w-100" onClick={this.saveChanges}>Save</button>
 				</div>
-			</React.Fragment>
+			</div>
 		)
 	}
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Headline);
+export default connect(mapStateToProps, mapDispatchToProps)(HeadlineEdit);
