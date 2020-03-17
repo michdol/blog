@@ -13,9 +13,13 @@
     position: absolute;
     top: 0;
     opacity: 0;
+    a {
+      margin: 0 10px;
+    }
   }
 
   &__no-hover {
+    margin: 0 20px;
     opacity: 1;
   }
 }

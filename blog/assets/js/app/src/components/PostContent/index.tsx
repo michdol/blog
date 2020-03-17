@@ -124,8 +124,8 @@ export class PostContent extends React.Component<TPostContentProps, TOwnState> {
 					<div className="row content-buttons pt-3 pb-3">
 						<div className="col-8">
 							<div className="row">
-								<a className="btn btn-outline-primary mr-2" onClick={this.moveUp}>Move Up</a>
-								<a className="btn btn-outline-primary" onClick={this.moveDown}>Move Down</a>
+								<a className="btn btn-light mr-2" onClick={this.moveUp}>Move Up</a>
+								<a className="btn btn-light" onClick={this.moveDown}>Move Down</a>
 							</div>
 						</div>
 						<div className="col-4">
