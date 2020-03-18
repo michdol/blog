@@ -43,14 +43,14 @@ export interface IReduxPostsState {
   post: IPost;
   postLoaded: boolean;
   deletedContents: IPostContent[];
-  hasChanged: boolean;
+  isContentSaved: boolean;
 }
 
 const initialState: IReduxPostsState = {
   post: {} as any,
   postLoaded: false,
   deletedContents: [],
-  hasChanged: false
+  isContentSaved: false
 };
 
 type TPostsReducerActions =
@@ -65,11 +65,11 @@ export default function(state: IReduxPostsState = initialState, action: TPostsRe
   let contentsCopy: IPostContent[];
   switch (action.type) {
     case EReduxActionTypes.GET_POST:
-      return { ...state, post: action.data, postLoaded: true, deletedContents: [], hasChanged: false };
+      return { ...state, post: action.data, postLoaded: true, deletedContents: [], isContentSaved: true };
     case EReduxActionTypes.SET_POST_CONTENT_HEADLINE:
       contentsCopy = Array.from(state.post.contents);
       let updatedContents: IPostContent[] = updatePostContent(contentsCopy, action.data);
-      return { ...state, hasChanged: true, post: {...state.post, contents: updatedContents } }
+      return { ...state, isContentSaved: false, post: {...state.post, contents: updatedContents } }
     case EReduxActionTypes.REORDER_POST_CONTENTS:
       let newContents: IPostContent[] = Array.from(state.post.contents);
       newContents = swapObjectsInArray(newContents, action.id, action.moveUp);
@@ -77,11 +77,11 @@ export default function(state: IReduxPostsState = initialState, action: TPostsRe
         // Do nothing
         return { ...state }
       }
-      return {...state, hasChanged: true, post: {...state.post, contents: newContents } }
+      return {...state, isContentSaved: false, post: {...state.post, contents: newContents } }
     case EReduxActionTypes.ADD_POST_CONTENT:
       contentsCopy = Array.from(state.post.contents);
       contentsCopy = insertNewContent(contentsCopy, action.data);
-      return {...state, hasChanged: true, post: {...state.post, contents: contentsCopy } }
+      return {...state, isContentSaved: false, post: {...state.post, contents: contentsCopy } }
     case EReduxActionTypes.DELETE_POST_CONTENT:
       contentsCopy = Array.from(state.post.contents);
       contentsCopy = deletePostContent(contentsCopy, action.content);
@@ -90,7 +90,7 @@ export default function(state: IReduxPostsState = initialState, action: TPostsRe
         deletedContentsCopy.push(action.content);
       }
       return {...state,
-        hasChanged: true,
+        isContentSaved: false,
         deletedContents: deletedContentsCopy,
         post: {
           ...state.post,

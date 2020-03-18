@@ -8,14 +8,13 @@ import { getPost } from 'store/posts/actions';
 import PostContent from "components/PostContent";
 import AddNewPostContent from "components/AddNewPostContent";
 import PostsService from 'src/services/posts';
-import UIService from 'src/services/ui';
 
 
 const mapStateToProps = (state: AppState) => ({
 	post: state.posts.post,
 	postLoaded: state.posts.postLoaded,
 	deletedContents: state.posts.deletedContents,
-	hasChanged: state.posts.hasChanged,
+	isContentSaved: state.posts.isContentSaved,
 	editActive: state.ui.editActive
 });
 
@@ -32,12 +31,10 @@ type TEditContentsProps = ReturnType<typeof mapStateToProps> & ReturnType<typeof
 class EditContents extends React.Component<TEditContentsProps, {}> {
 	private submitButton: any;
 	private postsService: any;
-	private uiService: any;
 
 	constructor(props: TEditContentsProps) {
 		super(props);
 		this.postsService = new PostsService();
-		this.uiService = new UIService();
 		this.djangoSubmitButtonListener = this.djangoSubmitButtonListener.bind(this);
 		this.updatePostContents = this.updatePostContents.bind(this);
 		this.onSuccess = this.onSuccess.bind(this);
@@ -49,18 +46,20 @@ class EditContents extends React.Component<TEditContentsProps, {}> {
 		if (this.submitButton !== undefined) {
 			this.submitButton.addEventListener("click", this.djangoSubmitButtonListener);
 		}
-		this.uiService.addEventListeners();
+		window.onbeforeunload = function() {
+			if (!this.props.isContentSaved) {
+				return "";
+			}
+		}.bind(this);
 	}
 
 	componentWillUnmount() {
 		if (this.submitButton !== undefined) {
 			this.submitButton.removeEventListener("click", this.djangoSubmitButtonListener);
 		}
-		this.uiService.removeEventListeners();
 	}
 
 	djangoSubmitButtonListener(e: any) {
-		console.log('tutej', e);
 		this.handleClick();
 	}
 
@@ -83,7 +82,7 @@ class EditContents extends React.Component<TEditContentsProps, {}> {
 	}
 
 	onSuccess(response: any) {
-		console.log('component', response);
+		// Syncronize data
 		this.props.getPost(response.data);
 	}
 
