@@ -1,8 +1,26 @@
 {% extends "base.html" %}
+{% load static sass_tags %}
+
+{% block extra_css %}
+<link href="{% sass_src 'css/posts/detail.scss' %}" rel="stylesheet" type="text/css" />
+{% endblock %}
 
 {% block content %}
-<h1>POST DETAIL</h1>
-
-{{post.title}}
+<div class="container">
+	<div class="row mt-5 mb-5" id='post-title'>
+		<div class="col-12 d-flex justify-content-center">
+			<span class="display-1 text-center">{{ post.title }}</span>
+		</div>
+	</div>
+	<div class="row" id="post-main-img">
+		<div class="col-lg-7 d-flex justify-content-center">
+			<img src="{{ post.image_url }}" />
+		</div>
+		<div class="col-lg-5">{{ post.description }}</div>
+	</div>
+	{% for content in contents %}
+		{% include "posts/_post_detail_content.html" %}
+	{% endfor %}
+</div>
 
 {% endblock %}

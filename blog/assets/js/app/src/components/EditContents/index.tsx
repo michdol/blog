@@ -93,7 +93,7 @@ class EditContents extends React.Component<TEditContentsProps, {}> {
 		}
 		return (
 			<div className="container">
-				<div className="row" id="post-button">
+				<div className="row mb-5 post-button">
 					<a className="btn btn btn-primary btn-lg text-white w-20" onClick={this.updatePostContents}>Post</a>
 				</div>
 				<div className="row">
@@ -103,6 +103,9 @@ class EditContents extends React.Component<TEditContentsProps, {}> {
 				</div>
 				<div className="row pb-5">
 					<AddNewPostContent idx={-1} />
+				</div>
+				<div className="row mb-5 post-button">
+					<a className="btn btn btn-primary btn-lg text-white w-20" onClick={this.updatePostContents}>Post</a>
 				</div>
 			</div>
 		)

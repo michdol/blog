@@ -1,0 +1,9 @@
+{% if content.type == PCT_HEADLINE %}
+<div class="post-content-headline col-lg-12 col-sm-8 d-flex">
+	<span class="display-4">{{ content.headline }}<span>
+</div>
+{% elif content.type == PCT_TEXT %}
+<div class="post-content-text col-lg-12 col-sm-8 d-flex">
+	<pre><p>{{ content.text }}</p></pre>
+</div>
+{% endif %}
