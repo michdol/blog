@@ -6,8 +6,10 @@ export interface IReduxGetPostAction extends IReduxBaseAction {
 	data: IPost;
 }
 
-export function getPost(): IReduxGetPostAction {
-	const post: IPost = JSON.parse(document.getElementById('post_data').textContent);
+export function getPost(post?: IPost): IReduxGetPostAction {
+	if (post === undefined) {
+		post = JSON.parse(document.getElementById('post_data').textContent);
+	}
 	return {
 		type: EReduxActionTypes.GET_POST,
 		data: post

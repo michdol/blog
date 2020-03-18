@@ -70,16 +70,16 @@ class AddNewPostContent extends React.Component<TAddNewPostContentProps, TOwnSta
 
 	render() {
 		return (
-			<div className="hover">
+			<div className="hover w-100">
 				<div className="hover__no-hover col-5 btn btn-light">
 					Add content
 				</div>
 				<div className="hover__hover col-6">
 					<a className="btn btn-light" onClick={this.addHeadline}>Headline</a>
 					<a className="btn btn-light" onClick={this.addText}>Text</a>
-					<a className="btn btn-light">Image</a>
-					<a className="btn btn-light">Video</a>
-					<a className="btn btn-light">Code</a>
+					<a className="btn btn-light disabled">Image</a>
+					<a className="btn btn-light disabled">Video</a>
+					<a className="btn btn-light disabled">Code</a>
 				</div>
 			</div>
 		)

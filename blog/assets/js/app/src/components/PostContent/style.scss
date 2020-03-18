@@ -1,3 +1,5 @@
+$btn-light-gray: #f8f9fa;
+
 .post-content {
 	.rendered-content {
 		.content-headline {
@@ -10,7 +12,15 @@
 			}
 		}
 		.content-text {
-			height: 10em;
+			height: auto;
+			min-height: 10em;
+			pre {
+				padding: 10px 10px;
+				border-radius: 5px;
+				&:hover {
+					background: $btn-light-gray;
+				}
+			}
 		}
 	}
 	.content-buttons {

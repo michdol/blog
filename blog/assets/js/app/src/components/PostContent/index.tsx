@@ -97,7 +97,7 @@ export class PostContent extends React.Component<TPostContentProps, TOwnState> {
 		return (
 			<div className="container content-text">
 				{ this.state.editActive && <Text content={content} onSave={this.closeEdit} /> }
-				{ !this.state.editActive && <span onClick={this.openEdit}>{ content.text }</span> }
+				{ !this.state.editActive && <pre onClick={this.openEdit}><span className="w-100">{ content.text }</span></pre> }
 			</div>
 		)	
 	}

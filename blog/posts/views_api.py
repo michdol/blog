@@ -5,8 +5,8 @@ from rest_framework import generics, status
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 
-from posts.models import PostContent
-from posts.serializers import PostContentSerializer
+from posts.models import Post, PostContent
+from posts.serializers import PostSerializer, PostContentSerializer
 
 
 class PostContentList(generics.ListAPIView):
@@ -22,7 +22,9 @@ class PostContentsDetail(generics.CreateAPIView):
     @transaction.atomic
     def post(self, request, *args, **kwargs) -> Response:
         self.process(request.data)
-        return Response(status.HTTP_200_OK)
+        post = Post.objects.prefetch_related('contents').get(id=self.kwargs.get('pk'))
+        serializer = PostSerializer(instance=post)
+        return Response(status=status.HTTP_200_OK, data=serializer.data)
 
     def process(self, data: dict):
         post_id = self.kwargs.get('pk')

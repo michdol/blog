@@ -35,7 +35,7 @@ export default class BaseApi {
       console.log(error.response.status);
       console.log(error.response.headers);
     } else {
-      console.log(error.message);
+      console.log(error);
     }
   };
 }

@@ -15,10 +15,10 @@ export default class PostsService extends BaseApi {
     return `posts/${ id }/contents/detail/`
   }
 
-  updatePostContents(post: IPost, deletedContents: IPostContent[]) {
+  updatePostContents(post: IPost, deletedContents: IPostContent[], onSuccess: any) {
     let url: string = this.contents_detail(post.id);
     let payload: IPostContentsPayload = this.createPostContentsPayload(post.contents, deletedContents);
-    this.post(url, payload, this.responseCallback)
+    this.post(url, payload, onSuccess)
   }
 
   createPostContentsPayload(contents: IPostContent[], deletedContents: IPostContent[]) {

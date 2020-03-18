@@ -39,6 +39,7 @@ export class HeadlineEdit extends React.Component<THeadlineEditProps, State> {
 		}
 		this.updateHeadline = this.updateHeadline.bind(this);
 		this.saveChanges = this.saveChanges.bind(this);
+		this.cancelChanges = this.cancelChanges.bind(this);
 	}
 
 	updateHeadline(e: any) {
@@ -52,6 +53,10 @@ export class HeadlineEdit extends React.Component<THeadlineEditProps, State> {
 		this.props.onSave();
 	}
 
+	cancelChanges() {
+		this.props.onSave();
+	}
+
 	render() {
 		return (
 			<div className="content-headline text-center d-flex align-items-center">
@@ -59,7 +64,12 @@ export class HeadlineEdit extends React.Component<THeadlineEditProps, State> {
 					<input className="w-100" type="text" value={this.state.headline} onChange={this.updateHeadline} />
 				</div>
 				<div className="col-2">
+					<div className="row">
 					<button className="btn btn-primary w-100" onClick={this.saveChanges}>Save</button>
+					</div>
+					<div className="row">
+					<button className="btn btn-primary w-100" onClick={this.cancelChanges}>Cancel</button>
+					</div>
 				</div>
 			</div>
 		)

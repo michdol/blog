@@ -7,14 +7,16 @@ import { setPostContentHeadline } from 'store/posts/actions';
 import { IPostContent } from 'store/posts/reducer';
 
 
-type Props = {
+type TOwnProps = {
 	content: IPostContent;
+	propertyName: string;
 	onSave: any;
 };
 
-const mapStateToProps = (state: AppState, ownProps: Props) => ({
+const mapStateToProps = (state: AppState, ownProps: TOwnProps) => ({
 	content: ownProps.content,
-	onSave: ownProps.onSave
+	onSave: ownProps.onSave,
+	propertyName: ownProps.propertyName
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) =>
@@ -26,29 +28,29 @@ const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) =>
 );
 
 type State = {
-	text: string;
+	value: string;
 }
 
-type TTextProps = ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchToProps>;
+type TProps = ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchToProps>;
 
-export class Text extends React.Component<TTextProps, State> {
+export class EditPostContentProperty extends React.Component<TProps, State> {
 	constructor(props: any) {
 		super(props);
 		this.state = {
-			text: props.content.text
+			value: props.content[props.propertyName]
 		}
-		this.updateText = this.updateText.bind(this);
+		this.updateValue = this.updateValue.bind(this);
 		this.saveChanges = this.saveChanges.bind(this);
 		this.cancelChanges = this.cancelChanges.bind(this);
 	}
 
-	updateText(e: any) {
-		this.setState({text: e.target.value})
+	updateValue(e: any) {
+		this.setState({value: e.target.value})
 	}
 
 	saveChanges() {
 		let content = this.props.content;
-		content.text = this.state.text;
+		//content[this.props.propertyName] = this.state.value;
 		this.props.setPostContentHeadline(content);
 		this.props.onSave();
 	}
@@ -60,7 +62,8 @@ export class Text extends React.Component<TTextProps, State> {
 	render() {
 		return (
 			<div>
-				<textarea className="w-100 form-control" value={this.state.text} onChange={this.updateText} />
+				{/* parametized element type, css classes */}
+				<textarea className="w-100 form-control" value={this.state.value} onChange={this.updateValue} />
 				<button onClick={this.saveChanges}>Save</button>
 				<button onClick={this.cancelChanges}>Cancel</button>
 			</div>
@@ -69,4 +72,4 @@ export class Text extends React.Component<TTextProps, State> {
 }
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(Text);
+export default connect(mapStateToProps, mapDispatchToProps)(EditPostContentProperty);
