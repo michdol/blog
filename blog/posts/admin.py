@@ -9,6 +9,9 @@ from posts.serializers import PostSerializer
 
 
 class PostAdminView(admin.ModelAdmin):
+	list_display = ('id', 'title', 'published', 'status', 'created', 'updated')
+	exclude = ('published',)
+
 	def change_view(self, request, object_id, form_url='', extra_context=None):
 		extra_context = extra_context or {}
 		post = Post.objects.prefetch_related("contents").get(id=object_id)
