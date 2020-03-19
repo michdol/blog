@@ -15,6 +15,7 @@ class Post(models.Model):
 	image_url = models.CharField(max_length=1024, blank=True, null=True)
 	extra = JSONField(default=dict)
 	status = models.IntegerField(choices=POST_STATUS_CHOICES, default=POST_STATUS_HIDE)
+	published = models.DateTimeField(null=True, blank=True)
 	updated = models.DateTimeField(auto_now=True)
 	created = models.DateTimeField(auto_now_add=True)
 
