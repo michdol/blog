@@ -7,20 +7,27 @@
 
 {% block content %}
 <div class="container">
-	<div class="row mt-5 mb-5" id='post-title'>
+	<div class="row mt-5" id='post-title'>
 		<div class="col-12 d-flex justify-content-center">
-			<span class="display-1 text-center">{{ post.title }}</span>
+			<span class="display-1">{{ post.title }}</span>
 		</div>
 	</div>
-	<div class="row" id="post-main-img">
+	<div class="row mb-5" id='post-date-published'>
+		<span>{{ post.created|date:"d/m/Y" }}</span>
+	</div>
+	<div class="row mb-5" id="post-main-img">
 		<div class="col-lg-7 d-flex justify-content-center">
 			<img src="{{ post.image_url }}" />
 		</div>
-		<div class="col-lg-5">{{ post.description }}</div>
+		<div class="col-lg-5 d-flex align-items-center">
+			{{ post.description }}
+		</div>
 	</div>
+	<div class="row">
 	{% for content in contents %}
 		{% include "posts/_post_detail_content.html" %}
 	{% endfor %}
+	</div>
 </div>
 
 {% endblock %}

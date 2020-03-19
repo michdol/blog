@@ -1,6 +1,12 @@
 #post-title {
-	span {
+	span.display-	1 {
 		font-size: 6em;
+	}
+}
+
+#post-date-published {
+	span {
+		padding: 15px;
 	}
 }
 
@@ -12,5 +18,20 @@
 	}
 }
 
+$headline-background-black: #1f1f1f;
+$headline-color: #fefefe;
+.post-content-headline {
+	margin: auto;
+	span {
+		font-size: 2.5rem !important;
+	}
+}
+
 .post-content-text {
+	margin: auto;
+	pre {
+		p {
+			font-size: 16px;
+		}
+	}
 }

@@ -68,7 +68,7 @@ class EditContents extends React.Component<TEditContentsProps, {}> {
 
 	renderPostContents(contents: any[]) {
 		return contents.map((content, idx) => {
-			return <li className="mb-3" key={idx}>
+			return <li className="mb-5" key={idx}>
 				<PostContent idx={idx} />
 				<AddNewPostContent idx={idx + 1} />
 			</li>
