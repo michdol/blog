@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% load static sass_tags %}
+
+{% block extra_css %}
+<link href="{% sass_src 'css/utils/about.scss' %}" rel="stylesheet" type="text/css" />
+{% endblock %}
+
+{% block content %}
+<div class="container" id="about-container">
+	<div class="row">
+		<div class="col-lg-4" id="profile-img">
+			<h1>image</h1>
+		</div>
+		<div class="col-lg-8" id="profile-description">
+			<h1>Text</h1>
+		</div>
+	</div>
+	<div class="row">
+		<h1>Second row</h1>
+	</div>
+</div>
+{% endblock %}
