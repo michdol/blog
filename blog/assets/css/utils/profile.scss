@@ -1,0 +1,31 @@
+$side-bar-background-color: #f3f5f9;
+
+#body_content_container {
+	height: 100vh !important;
+}
+
+#profile-container {
+	min-height: 100%;
+	#profile-side-bar {
+		background-color: $side-bar-background-color;
+		#profile-img {
+			margin: 15% auto 0 auto;
+			border-radius: 50%;
+			height: 150px;
+			width: 150px;
+			background-size: 100% 100%;
+		}
+		#links {
+			ul {
+				text-align: center;
+			}
+		}
+	}
+	#profile-main {
+	}
+}
+
+#header,
+#footer {
+	display: none;
+}

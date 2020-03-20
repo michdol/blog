@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% load static sass_tags %}
+
+{% block extra_css %}
+<link href="{% sass_src 'css/utils/profile.scss' %}" rel="stylesheet" type="text/css" />
+{% endblock %}
+
+{% block content %}
+<div class="row h-100" id="profile-container">
+	<div class="col-lg-3 h-100" id="profile-side-bar">
+		<div class="row">
+			<div id="profile-img" style="background-image: url('{% static 'img/profile.jpg' %}');">
+			</div>
+		</div>
+		<div class="row d-flex justify-content-center mt-3">
+			Michał Dołbniak
+		</div>
+		<div class="row d-flex justify-content-center">
+			Web Developer in Tokyo
+		</div>
+		<div class="row d-flex justify-content-center" id="links">
+			<ul class="nav flex-column">
+				<li class="nav-item">
+					<a class="nav-link active" href="#">Active</a>
+					</li>
+				<li class="nav-item">
+					<a class="nav-link" href="#">Home</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="#">Skills</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="#">Skills</a>
+				</li>
+			</ul>
+		</div>
+		<div class="row">
+			COPYRIGHT
+		</div>
+	</div>
+	<div class="col-lg-9 h-100" id="profile-main">
+		MAIN
+	</div>
+</div>
+{% endblock %}
