@@ -1,12 +1,13 @@
 #about-container {
 	padding-top: 5%;
 	.row:nth-child(1) {
-		height: 80vh;
+		height: 60vh;
 		#profile-img {
-			border: 1px solid green;
+			height: 85%;
+			background-image: url('/static/img/profile.jpg');
+			background-size: 100% 100%;
 		}
 		#profile-description {
-			border: 1px solid blue;
 		}
 	}
 }
