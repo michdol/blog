@@ -18,10 +18,16 @@ $side-bar-background-color: #f3f5f9;
 		#links {
 			ul {
 				text-align: center;
+				li {
+					a {
+						font-family: quicksand,Arial,sans-serif;
+					}
+				}
 			}
 		}
 	}
 	#profile-main {
+		border: 1px solid gray;
 	}
 }
 

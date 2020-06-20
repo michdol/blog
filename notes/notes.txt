@@ -23,3 +23,7 @@ npm install --save-dev webpack-bundle-tracker
 # DRF + Subdomains
 Set django.contrib.sites.models.Site domain and name
 Set SITE_ID
+
+
+# Profile page reference
+https://colorlib.com/preview/#jackson
